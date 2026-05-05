@@ -1,0 +1,58 @@
+{
+  "name": "@impt/swarm-widget",
+  "version": "0.1.0",
+  "description": "The open-source hotel-search widget that pays you 5%. By IMPT.",
+  "keywords": [
+    "hotel",
+    "booking",
+    "affiliate",
+    "widget",
+    "carbon-offset",
+    "travel",
+    "impt"
+  ],
+  "homepage": "https://swarm.impt.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMPTSystem/impt-swarm-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IMPTSystem/impt-swarm-widget/issues"
+  },
+  "license": "MIT",
+  "author": "IMPT Systems Limited <swarm-widget@impt.io>",
+  "main": "dist/widget.cjs.js",
+  "module": "dist/widget.esm.js",
+  "browser": "dist/widget.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "size": "size-limit",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "size-limit": [
+    {
+      "name": "widget.js (gzip)",
+      "path": "dist/widget.js",
+      "limit": "12 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.0.0",
+    "size-limit": "^11.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.2.0",
+    "vitest": "^1.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
