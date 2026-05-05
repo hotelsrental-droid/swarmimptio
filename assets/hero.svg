@@ -46,16 +46,10 @@
     <!-- code block -->
     <g transform="translate(0, 340)" filter="url(#softShadow)">
       <rect x="0" y="0" rx="14" width="540" height="118" fill="#08423a"/>
-      <g font-family="ui-monospace, 'SF Mono', Consolas, Menlo, monospace" font-size="13">
-        <text x="22" y="36" fill="#FAF7F0">
-          <tspan fill="#9BE6B0">&lt;script </tspan><tspan fill="#FFD49B">src</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"https://swarm.impt.io/widget.js"</tspan>
-        </text>
-        <text x="22" y="58" fill="#FAF7F0">
-          <tspan>        </tspan><tspan fill="#FFD49B">data-key</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"YOUR_KEY"</tspan><tspan> </tspan><tspan fill="#FFD49B">async</tspan><tspan fill="#9BE6B0">&gt;&lt;/script&gt;</tspan>
-        </text>
-        <text x="22" y="84" fill="#FAF7F0">
-          <tspan fill="#9BE6B0">&lt;div </tspan><tspan fill="#FFD49B">id</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"impt-swarm"</tspan><tspan fill="#9BE6B0">&gt;&lt;/div&gt;</tspan>
-        </text>
+      <g font-family="ui-monospace, 'SF Mono', Consolas, Menlo, monospace" font-size="13" xml:space="preserve">
+        <text x="22" y="36" fill="#FAF7F0"><tspan fill="#9BE6B0">&lt;script</tspan><tspan dx="6" fill="#FFD49B">src</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"https://swarm.impt.io/widget.js"</tspan></text>
+        <text x="22" y="58" fill="#FAF7F0"><tspan dx="48" fill="#FFD49B">data-key</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"YOUR_KEY"</tspan><tspan dx="6" fill="#FFD49B">async</tspan><tspan fill="#9BE6B0">&gt;&lt;/script&gt;</tspan></text>
+        <text x="22" y="84" fill="#FAF7F0"><tspan fill="#9BE6B0">&lt;div</tspan><tspan dx="6" fill="#FFD49B">id</tspan><tspan>=</tspan><tspan fill="#FFFFFF">"impt-swarm"</tspan><tspan fill="#9BE6B0">&gt;&lt;/div&gt;</tspan></text>
       </g>
       <g transform="translate(22, 100)" opacity="0.5">
         <circle cx="0" cy="0" r="4" fill="#FF6363"/>
