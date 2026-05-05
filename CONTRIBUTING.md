@@ -5,7 +5,7 @@ Thanks for your interest!
 ## Quick start
 
 ```bash
-git clone https://github.com/IMPTSystem/impt-swarm-widget
+git clone https://github.com/impt/swarm-widget
 cd impt-swarm-widget
 npm install
 npm run dev      # opens demo at http://localhost:5173

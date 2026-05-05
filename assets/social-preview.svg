@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-label="IMPT Swarm Widget social preview">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08423a"/>
+      <stop offset="100%" stop-color="#0d5a4f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.15" r="0.7">
+      <stop offset="0%" stop-color="#C8FF7E" stop-opacity="0.30"/>
+      <stop offset="60%" stop-color="#C8FF7E" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#C8FF7E" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FAF7F0" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg2)"/>
+  <rect width="1280" height="640" fill="url(#dots2)"/>
+  <rect width="1280" height="640" fill="url(#glow)"/>
+
+  <!-- left content -->
+  <g transform="translate(80, 96)">
+    <!-- monogram -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" rx="14" width="64" height="64" fill="#C8FF7E"/>
+      <text x="32" y="44" font-family="Fraunces, Georgia, serif" font-size="36" font-weight="700"
+            fill="#08423a" text-anchor="middle">i</text>
+    </g>
+
+    <text x="80" y="40" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600"
+          fill="#FAF7F0" letter-spacing="3">IMPT SWARM · OPEN SOURCE</text>
+    <text x="80" y="58" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="400"
+          fill="#9BE6B0" letter-spacing="2">github.com/impt/swarm-widget</text>
+
+    <!-- headline -->
+    <text x="0" y="180" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="600"
+          fill="#FAF7F0" letter-spacing="-3">The hotel widget</text>
+    <text x="0" y="282" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="600"
+          fill="#FAF7F0" letter-spacing="-3">that pays you</text>
+    <text x="478" y="282" font-family="Fraunces, Georgia, serif" font-size="96" font-style="italic"
+          font-weight="600" fill="#C8FF7E" letter-spacing="-3">5%</text>
+    <text x="578" y="282" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="600"
+          fill="#FAF7F0" letter-spacing="-3">.</text>
+
+    <!-- single line -->
+    <text x="0" y="354" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="400"
+          fill="#FAF7F0" fill-opacity="0.78">One line of code. MIT licence. 90-day cookie window.</text>
+
+    <!-- value pills -->
+    <g transform="translate(0, 400)">
+      <g>
+        <rect x="0" y="0" rx="999" width="180" height="42" fill="#C8FF7E"/>
+        <text x="90" y="27" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700"
+              fill="#08423a" text-anchor="middle">5% COMMISSION</text>
+      </g>
+      <g transform="translate(196, 0)">
+        <rect x="0" y="0" rx="999" width="170" height="42" fill="none" stroke="#C8FF7E" stroke-width="1.5"/>
+        <text x="85" y="27" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600"
+              fill="#C8FF7E" text-anchor="middle">90-DAY COOKIE</text>
+      </g>
+      <g transform="translate(382, 0)">
+        <rect x="0" y="0" rx="999" width="120" height="42" fill="none" stroke="#C8FF7E" stroke-width="1.5"/>
+        <text x="60" y="27" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600"
+              fill="#C8FF7E" text-anchor="middle">8.7 KB</text>
+      </g>
+      <g transform="translate(518, 0)">
+        <rect x="0" y="0" rx="999" width="100" height="42" fill="none" stroke="#C8FF7E" stroke-width="1.5"/>
+        <text x="50" y="27" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600"
+              fill="#C8FF7E" text-anchor="middle">MIT</text>
+      </g>
+    </g>
+
+    <!-- footer line -->
+    <text x="0" y="500" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="13"
+          fill="#9BE6B0" letter-spacing="1">$ npm i @impt/swarm-widget</text>
+  </g>
+
+  <!-- right side: tree icon, big and quiet -->
+  <g transform="translate(900, 220)" opacity="0.95">
+    <!-- subtle ring -->
+    <circle cx="160" cy="160" r="190" fill="none" stroke="#C8FF7E" stroke-opacity="0.15"/>
+    <circle cx="160" cy="160" r="150" fill="none" stroke="#C8FF7E" stroke-opacity="0.20"/>
+
+    <!-- stylised tree -->
+    <g transform="translate(160, 160)">
+      <!-- canopy -->
+      <circle cx="0" cy="-30" r="100" fill="#C8FF7E" fill-opacity="0.92"/>
+      <circle cx="-40" cy="-10" r="60" fill="#9BE6B0" fill-opacity="0.95"/>
+      <circle cx="40" cy="-20" r="55" fill="#9BE6B0" fill-opacity="0.88"/>
+      <circle cx="0" cy="-70" r="40" fill="#FAF7F0" fill-opacity="0.85"/>
+      <!-- trunk -->
+      <rect x="-8" y="50" width="16" height="80" fill="#08423a" rx="3"/>
+      <!-- ground line -->
+      <line x1="-80" y1="130" x2="80" y2="130" stroke="#C8FF7E" stroke-width="2" stroke-opacity="0.4"/>
+    </g>
+    <!-- "1 tonne CO₂" caption -->
+    <text x="160" y="380" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13"
+          font-weight="600" fill="#C8FF7E" letter-spacing="3">1 TONNE CO₂ · PER BOOKING</text>
+  </g>
+</svg>

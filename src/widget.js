@@ -1,7 +1,7 @@
 /*!
  * IMPT Swarm Widget v0.1.0
  * The open-source hotel-search widget that pays you 5%.
- * https://github.com/IMPTSystem/impt-swarm-widget
+ * https://github.com/impt/swarm-widget
  * MIT License - Copyright (c) 2026 IMPT Systems Limited
  */
 (function () {

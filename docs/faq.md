@@ -28,6 +28,6 @@ Yes. Useful for splitting earnings across sites or tracking campaigns. Up to 10 
 The widget code is MIT and on GitHub forever. Your keys would stop redirecting, but you'd still own the integration code. We don't plan on going anywhere — building an AI hotel system.
 
 ### Bug / feature / question?
-- Bugs → [GitHub Issues](https://github.com/IMPTSystem/impt-swarm-widget/issues)
-- Feature requests → [Discussions](https://github.com/IMPTSystem/impt-swarm-widget/discussions)
+- Bugs → [GitHub Issues](https://github.com/impt/swarm-widget/issues)
+- Feature requests → [Discussions](https://github.com/impt/swarm-widget/discussions)
 - Anything else → swarm-widget@impt.io

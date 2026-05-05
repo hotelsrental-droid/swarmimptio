@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">IMPT Swarm Widget — open-source hotel widget that pays 5%</title>
+  <desc id="desc">A cream search box renders on a dark cream background. Headline: The hotel widget that pays you 5%. One line, MIT licensed, 90-day cookie window.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF7F0"/>
+      <stop offset="100%" stop-color="#F0EBDF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C8FF7E"/>
+      <stop offset="100%" stop-color="#9BE6B0"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="22" flood-color="#08423a" flood-opacity="0.18"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#08423a" flood-opacity="0.12"/>
+    </filter>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#08423a" fill-opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#dots)"/>
+
+  <!-- left column: headline + sub + cli -->
+  <g transform="translate(80, 96)">
+    <!-- pill -->
+    <g>
+      <rect x="0" y="0" rx="999" width="220" height="32" fill="#08423a"/>
+      <text x="110" y="21" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700"
+            fill="#C8FF7E" text-anchor="middle" letter-spacing="2.4">OPEN SOURCE · MIT · v0.1.0</text>
+    </g>
+
+    <!-- main headline -->
+    <text x="0" y="120" font-family="Fraunces, Georgia, serif" font-size="84" font-weight="600"
+          fill="#08423a" letter-spacing="-2.4">The hotel widget</text>
+    <text x="0" y="208" font-family="Fraunces, Georgia, serif" font-size="84" font-weight="600"
+          fill="#08423a" letter-spacing="-2.4">that pays you</text>
+    <text x="408" y="208" font-family="Fraunces, Georgia, serif" font-size="84" font-style="italic"
+          font-weight="600" fill="#08423a" letter-spacing="-2.4">5%</text>
+    <text x="494" y="208" font-family="Fraunces, Georgia, serif" font-size="84" font-weight="600"
+          fill="#08423a" letter-spacing="-2.4">.</text>
+
+    <!-- subhead -->
+    <text x="0" y="266" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="400"
+          fill="#3a6b62">One line. Drop it on any site. MIT licensed. 8.7KB.</text>
+    <text x="0" y="294" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="400"
+          fill="#3a6b62">90-day cookie. Beats Booking (4% / 30d) and Expedia (4% / 7d).</text>
+
+    <!-- code block -->
+    <g transform="translate(0, 332)" filter="url(#softShadow)">
+      <rect x="0" y="0" rx="14" width="540" height="120" fill="#08423a"/>
+      <text x="22" y="38" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="13" fill="#FAF7F0">
+        <tspan fill="#9BE6B0">&lt;script</tspan>
+        <tspan fill="#FFD49B"> src</tspan>
+        <tspan fill="#FAF7F0">=</tspan>
+        <tspan fill="#FFFFFF">"https://swarm.impt.io/widget.js"</tspan>
+      </text>
+      <text x="22" y="60" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="13" fill="#FAF7F0">
+        <tspan fill="#FFD49B">        data-key</tspan>
+        <tspan fill="#FAF7F0">=</tspan>
+        <tspan fill="#FFFFFF">"YOUR_KEY"</tspan>
+        <tspan fill="#FFD49B"> async</tspan>
+        <tspan fill="#9BE6B0">&gt;&lt;/script&gt;</tspan>
+      </text>
+      <text x="22" y="86" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="13" fill="#FAF7F0">
+        <tspan fill="#9BE6B0">&lt;div</tspan>
+        <tspan fill="#FFD49B"> id</tspan>
+        <tspan fill="#FAF7F0">=</tspan>
+        <tspan fill="#FFFFFF">"impt-swarm"</tspan>
+        <tspan fill="#9BE6B0">&gt;&lt;/div&gt;</tspan>
+      </text>
+      <!-- macOS-style window dots -->
+      <g transform="translate(22, 100)" opacity="0.45">
+        <circle cx="0" cy="0" r="4" fill="#FF6363"/>
+        <circle cx="14" cy="0" r="4" fill="#FFD262"/>
+        <circle cx="28" cy="0" r="4" fill="#9BE6B0"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- right column: rendered widget mock -->
+  <g transform="translate(720, 100)" filter="url(#cardShadow)">
+    <rect x="0" y="0" rx="28" width="480" height="408" fill="#FAF7F0" stroke="#08423a" stroke-opacity="0.12"/>
+
+    <!-- eyebrow -->
+    <text x="36" y="56" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600"
+          fill="#3a6b62" letter-spacing="2.4">HOTELS WITH CONSCIENCE</text>
+
+    <!-- widget headline -->
+    <text x="36" y="100" font-family="Fraunces, Georgia, serif" font-size="26" font-weight="600"
+          fill="#08423a">Find your next stay.</text>
+    <text x="36" y="132" font-family="Fraunces, Georgia, serif" font-size="26" font-weight="600"
+          fill="#08423a">Plant a tree per booking.</text>
+
+    <!-- Where to label -->
+    <text x="36" y="184" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500"
+          fill="#3a6b62" letter-spacing="2">WHERE TO</text>
+
+    <!-- destination input -->
+    <rect x="36" y="196" rx="14" width="408" height="50" fill="#FFFFFF" stroke="#08423a" stroke-opacity="0.18"/>
+    <text x="56" y="226" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#08423a">Dublin, IE</text>
+    <!-- chevron -->
+    <path d="M412 220 l8 8 8 -8" stroke="#08423a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+
+    <!-- search button -->
+    <rect x="36" y="270" rx="14" width="408" height="52" fill="#C8FF7E"/>
+    <text x="240" y="302" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600"
+          fill="#08423a" text-anchor="middle">Search hotels →</text>
+
+    <!-- footer pill -->
+    <g transform="translate(36, 354)">
+      <circle cx="6" cy="6" r="6" fill="#C8FF7E" stroke="#9BE6B0" stroke-width="2" stroke-opacity="0.4"/>
+      <text x="22" y="11" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#3a6b62">€5 free credit · 5% Goodness back · 1 tonne CO₂ retired</text>
+    </g>
+    <text x="444" y="365" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="11"
+          fill="#3a6b62">Powered by IMPT</text>
+  </g>
+
+  <!-- bottom strip: comparison -->
+  <g transform="translate(80, 540)">
+    <line x1="0" y1="0" x2="1120" y2="0" stroke="#08423a" stroke-opacity="0.12"/>
+    <g transform="translate(0, 32)">
+      <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600"
+            fill="#3a6b62" letter-spacing="2">VS BOOKING.COM</text>
+      <text x="0" y="32" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="600"
+            fill="#08423a">+1% commission, 3× longer cookie</text>
+    </g>
+    <g transform="translate(660, 32)">
+      <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600"
+            fill="#3a6b62" letter-spacing="2">VS EXPEDIA</text>
+      <text x="0" y="32" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="600"
+            fill="#08423a">+1% commission, 13× longer cookie</text>
+    </g>
+  </g>
+</svg>
