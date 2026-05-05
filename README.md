@@ -128,6 +128,12 @@ Wishlist:
 
 MIT. Use it for anything. Even competitors. (We're confident.)
 
+## Legal + security
+
+- [Partner Terms](./TERMS.md) — commission, payout, what you must not do.
+- [Privacy](./PRIVACY.md) — what data we collect, why, retention.
+- [Security policy](./SECURITY.md) — vulnerability reporting, disclosure timeline, scope.
+
 ## About IMPT
 
 [IMPT](https://impt.io) is a hotel booking + carbon offset platform. 195 countries. 1.7M hotel URLs. €5 free signup credit. 5% Goodness back per booking — 3% to a cause, 2% to your next stay. Building the world's first AI hotel system.
