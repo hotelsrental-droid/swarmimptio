@@ -29,10 +29,12 @@
             fill="#C8FF7E" text-anchor="middle" letter-spacing="2.4">OPEN SOURCE · MIT · v0.1.0</text>
     </g>
 
-    <!-- headline (one text element, auto-flows; tspan handles the italic 5%) -->
+    <!-- headline — dx offsets force explicit spacing around the italic "5%" -->
     <text font-size="80" font-weight="700" fill="#08423a" letter-spacing="-2">
       <tspan x="0" y="138">The hotel widget</tspan>
-      <tspan x="0" y="226">that pays you <tspan font-style="italic" fill="#08423a">5%</tspan>.</tspan>
+    </text>
+    <text font-size="80" font-weight="700" fill="#08423a" letter-spacing="-2">
+      <tspan x="0" y="226">that pays you</tspan><tspan dx="22" font-style="italic" font-weight="700">5%</tspan><tspan dx="2">.</tspan>
     </text>
 
     <!-- subhead -->
