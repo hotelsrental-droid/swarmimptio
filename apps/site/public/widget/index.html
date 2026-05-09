@@ -110,12 +110,14 @@
 
     /* ── Live-widget preview strip (above hero) ── */
     .previews{padding:32px 0 8px;overflow:hidden;position:relative}
-    .previews::before,.previews::after{content:"";position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+    .previews::before,.previews::after{content:"";position:absolute;top:0;bottom:0;width:64px;z-index:2;pointer-events:none}
     .previews::before{left:0;background:linear-gradient(90deg,var(--cream),transparent)}
     .previews::after{right:0;background:linear-gradient(-90deg,var(--cream),transparent)}
-    .preview-track{display:flex;gap:14px;padding:0 24px 16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-    .preview-track::-webkit-scrollbar{display:none}
-    .pcard{flex:0 0 auto;width:230px;min-height:380px;background:#fff;border:1px solid var(--ink-soft);border-radius:22px;padding:14px;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 40px -20px rgba(8,66,58,.18);transition:transform .2s ease}
+    .preview-track{display:flex;gap:14px;width:max-content;animation:marquee 60s linear infinite;will-change:transform;padding:0 8px}
+    .preview-track:hover{animation-play-state:paused}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media (prefers-reduced-motion: reduce){.preview-track{animation:none;overflow-x:auto;width:auto}}
+    .pcard{flex:0 0 auto;width:220px;min-height:380px;background:#fff;border:1px solid var(--ink-soft);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 40px -20px rgba(8,66,58,.18);transition:transform .2s ease}
     .pcard:hover{transform:translateY(-3px)}
     .pcard .label{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);font-weight:700}
     .pcard .label .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(200,255,126,.25)}
@@ -280,6 +282,112 @@
 
     <!-- Claude / MCP -->
     <div class="pcard">
+      <div class="label"><span class="dot"></span>CLAUDE MCP · live</div>
+      <div class="surface mcp">
+        <div><span class="role">User</span> · book a stay in Dublin</div>
+        <div class="tool">→ <em>impt_search_hotels</em><br>&nbsp;&nbsp;city: "Dublin", limit: 3</div>
+        <div class="out">Found 3 hotels in Dublin:<br>• Clayton Hotel — 4★ EUR 398.6<br>• Bonnington — 4★ EUR 393.02<br>• L. Fitzgerald — 4★ EUR 378.43</div>
+        <div class="tool">→ <em>impt_create_intent</em><br>&nbsp;&nbsp;destination: "Dublin"</div>
+        <div class="out"><span style="color:#C8FF7E">Deeplink ready ✓</span><br>iid_QXTJCwGtArYl</div>
+      </div>
+    </div>
+
+<!-- duplicate set for seamless marquee loop -->
+
+    <!-- Telegram chat -->
+    <div class="pcard" aria-hidden="true">
+      <div class="label"><span class="dot"></span>TELEGRAM · live</div>
+      <div class="surface tg">
+        <div class="head"><div class="av">i</div><div><div class="name">IMPT booking</div><div class="sub">bot · online</div></div></div>
+        <div class="bubble b-user">/start</div>
+        <div class="bubble b-bot">🌱 <strong>IMPT — book hotels with conscience</strong><br>€5 free · 5% Goodness back · 1 t CO₂ per stay.<br>Pick a city or type one:</div>
+        <div class="kbd"><span>Dublin</span><span>Cork</span><span>Galway</span><span>London</span><span>Paris</span><span>Tokyo</span></div>
+      </div>
+    </div>
+
+    <!-- WhatsApp chat -->
+    <div class="pcard" aria-hidden="true">
+      <div class="label"><span class="dot"></span>WHATSAPP · live</div>
+      <div class="surface wa">
+        <div class="head"><div class="av">i</div><div><div class="name">IMPT</div><div style="font-size:9px;color:#8696a0">online</div></div></div>
+        <div class="bubble b-user">Dublin</div>
+        <div class="bubble b-card">
+          <div><strong>Dublin</strong> — book a hotel in EUR.</div>
+          <div style="margin-top:4px;font-size:9px;color:#aebac1">€5 free + 5% Goodness back · 1 t CO₂ offset (we pay)</div>
+          <a class="cta">🔎 Find hotels in Dublin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Web embed -->
+    <div class="pcard" aria-hidden="true">
+      <div class="label"><span class="dot"></span>WEB EMBED · live</div>
+      <div class="surface web">
+        <div class="eb">Hotels with conscience</div>
+        <div class="ti">Find your next stay. Plant a tree per booking.</div>
+        <div class="field"><label>Where to</label><div class="input">Dublin, IE ▾</div></div>
+        <div class="btn">Search hotels →</div>
+        <div class="badge2">€5 free · 5% Goodness back</div>
+      </div>
+    </div>
+
+    <!-- Instagram Story -->
+    <div class="pcard" aria-hidden="true">
+      <div class="label"><span class="dot"></span>INSTAGRAM · P2</div>
+      <div class="surface ig">
+        <div class="ig-head"><div class="ring"><div class="av"></div></div><div><div class="who">@theirbnb</div><div class="ago">3h</div></div></div>
+        <div class="stickr">🌱 Book Dublin<small>€5 free + 5% back</small></div>
+        <div class="swipe">⌃ Tap link</div>
+      </div>
+    </div>
+
+    <!-- QR code -->
+    <div class="pcard" aria-hidden="true">
+      <div class="label"><span class="dot"></span>QR · live</div>
+      <div class="surface qr">
+        <svg class="qr-img" viewBox="0 0 33 33" style="width:160px;height:160px;background:#08423a;padding:0;border-radius:8px;display:block" xmlns="http://www.w3.org/2000/svg">
+          <rect width="33" height="33" fill="#08423a"/>
+          <g fill="#FAF7F0" shape-rendering="crispEdges">
+            <!-- Top-left finder -->
+            <rect x="2" y="2" width="7" height="7"/>
+            <rect x="3" y="3" width="5" height="5" fill="#08423a"/>
+            <rect x="4" y="4" width="3" height="3" fill="#FAF7F0"/>
+            <!-- Top-right finder -->
+            <rect x="24" y="2" width="7" height="7"/>
+            <rect x="25" y="3" width="5" height="5" fill="#08423a"/>
+            <rect x="26" y="4" width="3" height="3" fill="#FAF7F0"/>
+            <!-- Bottom-left finder -->
+            <rect x="2" y="24" width="7" height="7"/>
+            <rect x="3" y="25" width="5" height="5" fill="#08423a"/>
+            <rect x="4" y="26" width="3" height="3" fill="#FAF7F0"/>
+            <!-- pseudo-random data modules so it reads as a QR (decorative — real QR served from /api/widget/qr) -->
+            <rect x="11" y="2" width="1" height="1"/><rect x="13" y="2" width="2" height="1"/><rect x="17" y="2" width="1" height="1"/><rect x="20" y="2" width="2" height="1"/>
+            <rect x="11" y="3" width="1" height="2"/><rect x="14" y="3" width="1" height="1"/><rect x="16" y="3" width="2" height="1"/><rect x="20" y="3" width="1" height="1"/><rect x="22" y="3" width="1" height="1"/>
+            <rect x="13" y="4" width="1" height="1"/><rect x="17" y="4" width="1" height="2"/><rect x="20" y="4" width="2" height="1"/>
+            <rect x="11" y="5" width="2" height="1"/><rect x="14" y="5" width="1" height="2"/><rect x="19" y="5" width="1" height="1"/><rect x="21" y="5" width="2" height="1"/>
+            <rect x="13" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="18" y="6" width="2" height="1"/><rect x="22" y="6" width="1" height="1"/>
+            <rect x="11" y="7" width="1" height="1"/><rect x="13" y="7" width="2" height="1"/><rect x="17" y="7" width="1" height="2"/><rect x="20" y="7" width="1" height="1"/>
+            <rect x="2" y="11" width="1" height="2"/><rect x="4" y="11" width="2" height="1"/><rect x="7" y="11" width="2" height="1"/><rect x="11" y="11" width="2" height="2"/><rect x="15" y="11" width="2" height="1"/><rect x="19" y="11" width="1" height="1"/><rect x="22" y="11" width="2" height="1"/><rect x="25" y="11" width="1" height="1"/><rect x="28" y="11" width="2" height="1"/>
+            <rect x="3" y="12" width="1" height="2"/><rect x="6" y="12" width="1" height="1"/><rect x="9" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="2"/><rect x="16" y="12" width="1" height="1"/><rect x="20" y="12" width="2" height="1"/><rect x="23" y="12" width="1" height="2"/><rect x="26" y="12" width="2" height="1"/><rect x="30" y="12" width="1" height="1"/>
+            <rect x="2" y="13" width="2" height="1"/><rect x="5" y="13" width="2" height="1"/><rect x="8" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="2"/><rect x="14" y="13" width="2" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="19" y="13" width="2" height="1"/><rect x="22" y="13" width="1" height="2"/><rect x="25" y="13" width="2" height="1"/><rect x="29" y="13" width="1" height="2"/>
+            <rect x="4" y="14" width="1" height="1"/><rect x="7" y="14" width="2" height="1"/><rect x="10" y="14" width="1" height="2"/><rect x="13" y="14" width="1" height="2"/><rect x="16" y="14" width="2" height="1"/><rect x="19" y="14" width="1" height="2"/><rect x="22" y="14" width="2" height="1"/><rect x="25" y="14" width="1" height="2"/><rect x="28" y="14" width="2" height="1"/>
+            <rect x="2" y="15" width="2" height="1"/><rect x="5" y="15" width="1" height="2"/><rect x="8" y="15" width="2" height="1"/><rect x="11" y="15" width="2" height="1"/><rect x="14" y="15" width="2" height="1"/><rect x="17" y="15" width="1" height="2"/><rect x="20" y="15" width="1" height="1"/><rect x="23" y="15" width="2" height="1"/><rect x="26" y="15" width="1" height="2"/>
+            <rect x="3" y="16" width="2" height="1"/><rect x="7" y="16" width="2" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="13" y="16" width="2" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="19" y="16" width="2" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="25" y="16" width="2" height="1"/><rect x="29" y="16" width="2" height="1"/>
+            <rect x="11" y="24" width="2" height="1"/><rect x="14" y="24" width="1" height="2"/><rect x="17" y="24" width="2" height="1"/><rect x="20" y="24" width="1" height="2"/><rect x="23" y="24" width="2" height="1"/><rect x="27" y="24" width="2" height="1"/>
+            <rect x="13" y="25" width="1" height="1"/><rect x="16" y="25" width="2" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="22" y="25" width="2" height="1"/><rect x="26" y="25" width="1" height="2"/><rect x="29" y="25" width="2" height="1"/>
+            <rect x="11" y="26" width="1" height="2"/><rect x="14" y="26" width="2" height="1"/><rect x="18" y="26" width="1" height="2"/><rect x="21" y="26" width="2" height="1"/><rect x="24" y="26" width="1" height="1"/><rect x="28" y="26" width="2" height="1"/>
+            <rect x="13" y="27" width="2" height="1"/><rect x="17" y="27" width="1" height="1"/><rect x="20" y="27" width="2" height="1"/><rect x="23" y="27" width="1" height="2"/><rect x="26" y="27" width="2" height="1"/><rect x="30" y="27" width="1" height="1"/>
+            <rect x="11" y="28" width="2" height="1"/><rect x="14" y="28" width="1" height="2"/><rect x="17" y="28" width="2" height="1"/><rect x="20" y="28" width="1" height="1"/><rect x="22" y="28" width="2" height="1"/><rect x="26" y="28" width="1" height="2"/><rect x="29" y="28" width="1" height="1"/>
+            <rect x="13" y="29" width="1" height="1"/><rect x="16" y="29" width="1" height="2"/><rect x="19" y="29" width="2" height="1"/><rect x="23" y="29" width="2" height="1"/><rect x="27" y="29" width="2" height="1"/>
+            <rect x="11" y="30" width="2" height="1"/><rect x="14" y="30" width="2" height="1"/><rect x="18" y="30" width="2" height="1"/><rect x="21" y="30" width="1" height="1"/><rect x="24" y="30" width="2" height="1"/><rect x="28" y="30" width="2" height="1"/>
+          </g>
+        </svg>
+        <div class="cap">Scan → book Dublin<br><span style="font-weight:500;color:var(--mute);font-size:9px">5% to printer · 1 t CO₂ offset</span></div>
+      </div>
+    </div>
+
+    <!-- Claude / MCP -->
+    <div class="pcard" aria-hidden="true">
       <div class="label"><span class="dot"></span>CLAUDE MCP · live</div>
       <div class="surface mcp">
         <div><span class="role">User</span> · book a stay in Dublin</div>
