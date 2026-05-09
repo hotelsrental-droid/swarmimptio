@@ -2,28 +2,31 @@
  * POST /api/widget/intent
  *
  * Create an Intent. Returns a stable intent_id, the canonical find-hotel-input deeplink,
- * a tracking-pixel URL the adapter can fire client-side, and an embed snippet.
+ * a tracking-pixel URL, and an embed snippet.
  *
  * Body (JSON):
  *   {
  *     "destination": "Dublin",
  *     "partner": { "key": "prt_abc", "channel": "tg", "campaign": "summer-2026", "creator": "@bee" },
  *     "guests": { "adults": 2, "children": 0, "rooms": 1 } (optional),
- *     "intent": "search_hotel" (optional, default "search_hotel"),
+ *     "intent": "search_hotel" (optional),
  *     "user_locale": "en-IE" (optional)
  *   }
  *
  * Response (JSON):
  *   {
- *     "intent_id": "iid_<22 chars>",
+ *     "intent_id": "iid_<12>",
  *     "deeplink": "https://app.impt.io/find-hotel-input?...",
  *     "track": "https://swarm.impt.io/api/widget/track?...",
- *     "embed": "<script src='...' data-key='...'></script><div id='impt-swarm'></div>",
+ *     "embed": "<script src='...' data-key='...'></script>...",
  *     "qr": "https://swarm.impt.io/api/qr/<key>.svg?dest=Dublin"
  *   }
  */
 
 import { findCity } from '../../../../../adapters/_shared/src/cities.js';
+import { json, badRequest, preflight } from '../../_lib/json.js';
+import { kvPut, type Bindings } from '../../_lib/kv.js';
+import { newIntentId } from '../../_lib/keys.js';
 
 interface IntentBody {
   destination?: string;
@@ -38,19 +41,6 @@ interface IntentBody {
   intent?: string;
   user_locale?: string;
   consent?: { marketing?: boolean };
-}
-
-interface Env {
-  INTENTS?: KVNamespace;
-}
-
-function newIntentId(): string {
-  // Short, URL-safe — base32 of 12 random bytes.
-  const bytes = crypto.getRandomValues(new Uint8Array(12));
-  const alphabet = '0123456789abcdefghijklmnopqrstuv';
-  let out = 'iid_';
-  for (let i = 0; i < bytes.length; i++) out += alphabet[bytes[i]! & 31];
-  return out;
 }
 
 function buildDeeplink(body: IntentBody, iid: string): string {
@@ -81,55 +71,54 @@ function buildDeeplink(body: IntentBody, iid: string): string {
   return `https://app.impt.io/find-hotel-input?${params.toString()}`;
 }
 
-export const onRequestPost: PagesFunction<Env> = async (ctx) => {
+export const onRequestPost: PagesFunction<Bindings> = async (ctx) => {
   let body: IntentBody;
   try {
     body = await ctx.request.json();
   } catch {
-    return json({ error: 'invalid_json' }, 400);
+    return badRequest('invalid_json');
   }
 
-  const key = body.partner?.key || 'swarm-public';
-  const channel = body.partner?.channel || 'widget';
   const dest = body.destination?.trim();
+  if (!dest) {
+    return badRequest('destination_required', 'Pass a CITY (never country) per IMPT memory rule.');
+  }
 
-  if (!dest) return json({ error: 'destination_required', hint: 'Pass a CITY name (never country) per IMPT memory rule.' }, 400);
+  const partner = body.partner ?? {};
+  const key = partner.key || 'swarm-public';
+  const channel = partner.channel || 'widget';
 
   const iid = newIntentId();
   const deeplink = buildDeeplink(body, iid);
-  const track = `https://swarm.impt.io/api/widget/track?key=${encodeURIComponent(key)}&evt=intent_created&channel=${encodeURIComponent(channel)}&dest=${encodeURIComponent(dest)}&iid=${iid}&ts=${Date.now()}`;
+  const track =
+    `https://swarm.impt.io/api/widget/track?key=${encodeURIComponent(key)}` +
+    `&evt=intent_created&channel=${encodeURIComponent(channel)}` +
+    `&dest=${encodeURIComponent(dest)}&iid=${iid}&ts=${Date.now()}`;
   const embed = `<script src="https://swarm.impt.io/widget.js" data-key="${escapeHtml(key)}" data-dest="${escapeHtml(dest)}" async></script><div id="impt-swarm"></div>`;
   const qr = `https://swarm.impt.io/api/qr/${encodeURIComponent(key)}.svg?dest=${encodeURIComponent(dest)}&iid=${iid}`;
 
-  if (ctx.env.INTENTS) {
-    ctx.waitUntil(ctx.env.INTENTS.put(`intent:${iid}`, JSON.stringify({ ...body, iid, ts: Date.now() }), {
-      expirationTtl: 60 * 60 * 24 * 90
-    }));
-  }
+  // Persist intent for the conversion-attribution loop.
+  const cf = (ctx.request as Request & { cf?: { country?: string } }).cf;
+  const record = {
+    iid,
+    key,
+    channel,
+    destination: dest,
+    campaign: partner.campaign ?? null,
+    creator: partner.creator ?? null,
+    click_id: partner.click_id ?? null,
+    guests: body.guests ?? null,
+    user_locale: body.user_locale ?? null,
+    cf_country: cf?.country ?? null,
+    ts: Date.now(),
+    status: 'created' as const
+  };
+  ctx.waitUntil(kvPut(ctx.env.INTENTS, `intent:${iid}`, record, { ttlDays: 90 }));
 
-  return json({ intent_id: iid, deeplink, track, embed, qr }, 200);
+  return json({ intent_id: iid, deeplink, track, embed, qr });
 };
 
-export const onRequestOptions: PagesFunction = async () =>
-  new Response(null, {
-    status: 204,
-    headers: {
-      'access-control-allow-origin': '*',
-      'access-control-allow-methods': 'POST, OPTIONS',
-      'access-control-allow-headers': 'content-type',
-      'access-control-max-age': '86400'
-    }
-  });
-
-function json(body: unknown, status: number): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'content-type': 'application/json',
-      'access-control-allow-origin': '*'
-    }
-  });
-}
+export const onRequestOptions: PagesFunction = async () => preflight();
 
 function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
