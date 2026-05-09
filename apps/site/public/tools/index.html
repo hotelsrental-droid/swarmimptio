@@ -351,24 +351,20 @@
 
 <div class="tool" id="t-wa">
   <div class="head"><h3>WhatsApp — Meta verify endpoint</h3><span class="pill gate">NEEDS META TOKENS</span></div>
-  <p class="desc">Verify endpoint accepts Meta's hub.challenge handshake. POST handler 200-acks until WA_PHONE_NUMBER_ID + WA_TOKEN are provisioned.</p>
+  <p class="desc">Endpoint accepts Meta's hub.challenge handshake. <strong>Correct behaviour:</strong> reject anything without the right verify token (403). Meta requires this — without it the webhook would accept any Meta-impersonator.</p>
   <div class="endp">GET+POST /api/whatsapp/webhook</div>
-  <form onsubmit="return tryWaVerify(this,event)">
-    <label>Test verify token (won't pass — token is private)</label>
-    <input name="token" value="ANY_VALUE" required>
-    <button type="submit">Send Meta-style verify</button>
+  <form onsubmit="return tryWaSecurityCheck(this,event)">
+    <button type="submit">Confirm endpoint refuses unauthorised verify (expects 403)</button>
   </form>
   <div class="out"></div>
 </div>
 
 <div class="tool" id="t-fb">
   <div class="head"><h3>Facebook Messenger — verify endpoint</h3><span class="pill gate">NEEDS META TOKENS</span></div>
-  <p class="desc">Same Meta-verify pattern. Generic-template card replies once FB_PAGE_ACCESS_TOKEN is set.</p>
+  <p class="desc">Same Meta-verify pattern. <strong>Correct behaviour:</strong> reject anything without the right verify token (403). Generic-template card replies start once FB_PAGE_ACCESS_TOKEN is set.</p>
   <div class="endp">GET+POST /api/fb/webhook</div>
-  <form onsubmit="return tryFbVerify(this,event)">
-    <label>Test verify token (won't pass — token is private)</label>
-    <input name="token" value="ANY_VALUE" required>
-    <button type="submit">Send Meta-style verify</button>
+  <form onsubmit="return tryFbSecurityCheck(this,event)">
+    <button type="submit">Confirm endpoint refuses unauthorised verify (expects 403)</button>
   </form>
   <div class="out"></div>
 </div>
@@ -501,14 +497,40 @@ function tryGpt(form, ev){ ev.preventDefault();
   call(form.closest('.tool'), '/api/gpt/openapi.json');
   return false;
 }
-function tryWaVerify(form, ev){ ev.preventDefault();
-  call(form.closest('.tool'),
-    '/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=' + encodeURIComponent(form.token.value) + '&hub.challenge=test123');
+async function securityCheck(card, url, expectedStatus){
+  // Calls the verify endpoint with a deliberately-wrong token. We EXPECT a 403.
+  // 403 = endpoint refuses unauthorised verify (correct).
+  // 200 = endpoint accepted (would only happen if our wrong-token actually matched the secret).
+  try {
+    const r = await fetch(url);
+    const body = await r.text();
+    const out = card.querySelector('.out');
+    out.classList.add('show');
+    if (r.status === expectedStatus) {
+      out.innerHTML =
+        '<div class="meta"><span class="ok">✓ HTTP ' + r.status + ' — expected</span> · endpoint correctly refused the request</div>' +
+        '<pre>' + escapeHtml(body) + '</pre>' +
+        '<div style="font-size:11px;color:var(--mute);margin-top:6px">' +
+        'This is the security working — Meta only sees a 200 challenge response when the verify_token in their request matches the one configured server-side. Any other token (including the test request just sent) gets a 403. ' +
+        'When Meta tokens are pasted into <code>/srv/swarm/impt-swarm-oss-2026-05-05/backend/.env</code> and Meta calls with the right token, you\'d see a 200 + challenge echo here.' +
+        '</div>';
+    } else {
+      out.innerHTML =
+        '<div class="meta"><span class="err">HTTP ' + r.status + ' — unexpected (security regression?)</span></div>' +
+        '<pre>' + escapeHtml(body) + '</pre>';
+    }
+  } catch (e) {
+    show(card, 0, 'fetch error: ' + e.message, 'text/plain');
+  }
+}
+function tryWaSecurityCheck(form, ev){ ev.preventDefault();
+  securityCheck(form.closest('.tool'),
+    '/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=DELIBERATELY_WRONG&hub.challenge=test123', 403);
   return false;
 }
-function tryFbVerify(form, ev){ ev.preventDefault();
-  call(form.closest('.tool'),
-    '/api/fb/webhook?hub.mode=subscribe&hub.verify_token=' + encodeURIComponent(form.token.value) + '&hub.challenge=test123');
+function tryFbSecurityCheck(form, ev){ ev.preventDefault();
+  securityCheck(form.closest('.tool'),
+    '/api/fb/webhook?hub.mode=subscribe&hub.verify_token=DELIBERATELY_WRONG&hub.challenge=test123', 403);
   return false;
 }
 function trySignup(form, ev){ ev.preventDefault();
