@@ -20,3 +20,7 @@
 
 # Legacy partner sign-up alias
 /widget/signup /partners 301
+
+# Legacy /widget — historical demo URL (existing partner inbound links). 301 to home.
+/widget /  301
+/widget/  /  301

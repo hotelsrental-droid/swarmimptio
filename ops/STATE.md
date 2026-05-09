@@ -3,7 +3,32 @@
 
 ---
 
-## 2026-05-09 (later) — PR #2 opened (Claude session)
+## 2026-05-09 (latest) — PR #3 opened: bots + big homepage refresh
+
+### Phase
+P1 — Telegram + WhatsApp + Facebook webhooks; refreshed swarm.impt.io homepage.
+
+### What this PR does
+- **`/api/tg/webhook`** — full Telegram bot. `/start` city picker, `/book Dublin` deeplink, plain-text city handler, callback queries. Uses existing `TELEGRAM_BOT_TOKEN` from `/home/mike/impt-management/.env` (bot is `@Rambo_Marc2_bot` — Mike can rename via @BotFather)
+- **`/api/whatsapp/webhook`** — Meta Cloud API receiver: GET verification + POST text/interactive message handler with `cta_url` reply. Webhook is wired but inert until Mike provisions a WA Business number
+- **`/api/fb/webhook`** — Meta Messenger Platform receiver: GET verification + POST quick-reply + postback handler with generic-template card. Wired but inert until Mike adds the IMPT Page to the Messenger app
+- **Updated `/tg /wa /fb` landing pages** — point at real bots / m.me link, "Try it" instructions
+- **Big homepage refresh** at `/` — hero with 6 stats, live demo widget, all 36 channels grouped by tier with status pills (Live / P1 / P2 / P3 / P4 / P5), how-it-works flow, Goodness mechanic dark panel, comparison table vs Booking/Expedia, real partner sign-up form
+- **`ops/SETUP.md`** — exact one-shot commands Mike runs after merging: CF Pages connect, KV bindings, env vars, Telegram webhook curl, mgmt-server crons
+- `_redirects` adds `/widget → /` (legacy partner inbound links)
+
+### Why workflows are still in `ops/workflows/`
+gh OAuth token lacks `workflow` scope → can't push under `.github/workflows/`. Refresh requires browser interaction. **Resolution:** monitor + sync crons run on mgmt server (where direct Mongo + CF API access live anyway), same pattern as `brain-tick`. Workflows in `ops/workflows/` are templates Mike can paste via web UI later.
+
+### Mike test checklist (after CF Pages + Telegram webhook are set)
+- [ ] **TG:** `t.me/Rambo_Marc2_bot?start=Dublin` → city picker, tap city → booking link
+- [ ] **WA:** swarm.impt.io/wa → wa.me opens → message bot (after Meta provisioning)
+- [ ] **FB:** swarm.impt.io/fb → m.me/imptio → message page (after Meta provisioning)
+- [ ] **Web:** swarm.impt.io → demo widget on home → pick city → find-hotel-input
+
+---
+
+## 2026-05-09 (mid) — PR #2 opened (Claude session)
 
 ### Phase
 P0.5 — Mongo wire + hotels proxy + partner sign-up.
