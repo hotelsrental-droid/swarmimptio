@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT × Instagram — book hotels from Reels & Stories</title>
+<meta name="description" content="Tap from an IG link sticker → land here → book hotels with €5 + 5% Goodness back. 1 tonne CO₂ per booking.">
+<meta property="og:title" content="Book green hotels — €5 free + 5% back">
+<meta property="og:description" content="One booking. €5 credit. 5% Goodness back. 1 tonne CO₂ offset.">
+<meta property="og:image" content="/assets/social-preview.svg">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="ig">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × Instagram</p>
+  <h1>Found us from a Reel?</h1>
+  <p class="lede" id="lede">You tapped a creator's IMPT link. We'll send you to find a hotel — every booking earns the creator 5% and offsets a tonne of carbon.</p>
+  <div class="row">
+    <a class="cta lime" href="#" id="book-now">Find a hotel →</a>
+  </div>
+  <div class="box" id="creator-box" hidden>
+    <h2>For creators</h2>
+    <p style="color:var(--mute);font-size:14px">Add this link to your bio or Story sticker — your handle gets credited on every booking.</p>
+    <pre id="partner-link">https://swarm.impt.io/ig/r/YOUR_HANDLE?key=YOUR_KEY&amp;dest=Dublin</pre>
+    <p style="margin-top:10px;font-size:13px"><a href="/partners">Become a creator partner →</a></p>
+  </div>
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+  // Auto-redirect after 1s — IG users expect the click sticker to feel instant
+  setTimeout(function () { location.replace(SwarmChannel.bookNowUrl()); }, 1000);
+  var pl = document.getElementById('partner-link');
+  if (SwarmChannel.key && SwarmChannel.key !== 'swarm-public') {
+    pl.textContent = 'https://swarm.impt.io/ig/r/YOUR_HANDLE?key=' + SwarmChannel.key + (SwarmChannel.dest ? '&dest=' + SwarmChannel.dest : '&dest=Dublin');
+    document.getElementById('creator-box').hidden = false;
+  }
+</script>
+</body></html>

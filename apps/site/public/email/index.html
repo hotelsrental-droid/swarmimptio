@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT email signature — turn every reply into 5% back</title>
+<meta name="description" content="Generate a one-line IMPT signature snippet. Paste into Gmail / Outlook / Apple Mail. 5% back per booking your readers make.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="email">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × Email signature</p>
+  <h1>Turn every email into a hotel booking.</h1>
+  <p class="lede">Paste this one line into your email signature. Every reader who books through it pays you 5% — 90-day attribution, no setup.</p>
+
+  <div class="box">
+    <h2>Your snippet</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">Set <code>?key=</code> with your partner key. Copy + paste into Gmail/Outlook/Apple Mail signature settings.</p>
+<pre id="snippet">🌱 Book green hotels — €5 free + 5% back · &lt;a href="https://swarm.impt.io/email?key=YOUR_KEY"&gt;swarm.impt.io&lt;/a&gt;</pre>
+    <button class="cta lime" id="copy-btn" style="margin-top:14px;border:0">Copy snippet</button>
+    <span id="copy-msg" style="margin-left:12px;font-size:13px;color:var(--mute)"></span>
+  </div>
+
+  <div class="box">
+    <h2>Want to book a hotel right now?</h2>
+    <a class="cta" href="#" id="book-now">Find a hotel →</a>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+  var snippet = document.getElementById('snippet');
+  if (SwarmChannel.key && SwarmChannel.key !== 'swarm-public') {
+    snippet.textContent = snippet.textContent.replace('YOUR_KEY', SwarmChannel.key);
+  }
+  document.getElementById('copy-btn').addEventListener('click', async function () {
+    try {
+      await navigator.clipboard.writeText(snippet.textContent);
+      document.getElementById('copy-msg').textContent = 'Copied — paste into your signature.';
+      SwarmChannel.track('copy_signature');
+    } catch (e) {
+      document.getElementById('copy-msg').textContent = 'Select + copy manually.';
+    }
+  });
+</script>
+</body></html>

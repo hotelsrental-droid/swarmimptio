@@ -1,0 +1,26 @@
+# Cloudflare Pages headers
+# Cross-origin: widget.js + tracking endpoint must be embeddable from any partner site.
+
+/widget.js
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=14400, s-maxage=300
+  X-Content-Type-Options: nosniff
+
+/api/widget/track
+  Access-Control-Allow-Origin: *
+
+/api/widget/intent
+  Access-Control-Allow-Origin: *
+
+/api/widget/hotels
+  Access-Control-Allow-Origin: *
+
+# All channel landing pages — embeddable in social previews + iframes
+/tg/*
+  X-Frame-Options: ALLOWALL
+
+/wa/*
+  X-Frame-Options: ALLOWALL
+
+/x/*
+  X-Frame-Options: ALLOWALL

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT × SMS — book hotels via SMS</title>
+<meta name="description" content="Got an IMPT short link in a text? Tap to find a hotel — €5 free + 5% back.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="sms">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × SMS</p>
+  <h1>Book hotels from a text.</h1>
+  <p class="lede">Got an IMPT short link in a text? Tap to find a hotel — €5 free + 5% back.</p>
+  <div class="row">
+    <a class="cta lime" href="#" id="book-now">Find a hotel →</a>
+    <a class="cta" href="/partners">Become a partner</a>
+  </div>
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P3 — short-link service /s/&lt;key&gt; lands alongside the QR generator.</p>
+  </div>
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+</script>
+</body></html>

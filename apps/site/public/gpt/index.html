@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT Custom GPT — book hotels in ChatGPT</title>
+<meta name="description" content="Add the IMPT Custom GPT to ChatGPT. Ask in natural language — the GPT returns canonical booking deeplinks. 5% back per booking.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="gpt">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × ChatGPT</p>
+  <h1>Book hotels in ChatGPT.</h1>
+  <p class="lede">Our Custom GPT lets ChatGPT users search and reserve through IMPT. The Action calls our API and returns canonical booking deeplinks — your readers complete payment in one click.</p>
+
+  <div class="row">
+    <a class="cta lime" href="#" id="open-gpt">Open in ChatGPT →</a>
+    <a class="cta" href="/api/gpt/openapi.json">OpenAPI spec</a>
+  </div>
+
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P1 — Custom GPT submission to OpenAI's GPT Store in progress. The OpenAPI Action manifest at <code>/api/gpt/openapi.json</code> is the source of truth — any custom client (Cursor, Cline, Continue) can also wire it.</p>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  // P1 — replace with chat.openai.com/g/<gpt-id> once published
+  document.getElementById('open-gpt').addEventListener('click', function (e) {
+    e.preventDefault();
+    SwarmChannel.track('click');
+    alert('Custom GPT publishing this week — until then, point a custom client at /api/gpt/openapi.json');
+  });
+</script>
+</body></html>

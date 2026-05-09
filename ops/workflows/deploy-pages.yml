@@ -1,0 +1,36 @@
+name: deploy-pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/site/**'
+      - 'adapters/_shared/**'
+      - 'src/widget.js'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+# This workflow is INERT until Mike adds CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID
+# secrets to the repo and enables it. CF Pages "Connect to Git" UI is the easier path —
+# this file is here as a manual fallback.
+jobs:
+  deploy:
+    if: ${{ vars.ENABLE_DEPLOY == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run site:build
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy apps/site/public --project-name=swarm-impt --branch=main

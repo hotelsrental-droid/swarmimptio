@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT × Chrome — book hotels via Chrome</title>
+<meta name="description" content="The IMPT Chrome extension overlays a 'You'd save €X + 1 t CO₂ on IMPT' badge on Booking.com / Expedia / Hotels.com searches.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="chrome">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × Chrome</p>
+  <h1>Save 5% on every Booking.com search.</h1>
+  <p class="lede">The IMPT Chrome extension overlays a 'You'd save €X + 1 t CO₂ on IMPT' badge on Booking.com / Expedia / Hotels.com searches.</p>
+  <div class="row">
+    <a class="cta lime" href="#" id="book-now">Find a hotel →</a>
+    <a class="cta" href="/partners">Become a partner</a>
+  </div>
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P5 — Chrome Web Store submission in progress.</p>
+  </div>
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+</script>
+</body></html>

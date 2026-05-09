@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT MCP server — book hotels via Claude</title>
+<meta name="description" content="Add the IMPT MCP server to Claude Desktop or Claude Code. AI can search hotels, get quotes, and produce booking deeplinks. 5% back per confirmed booking.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="mcp">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × Claude (MCP)</p>
+  <h1>Let Claude book hotels.</h1>
+  <p class="lede">Add the IMPT MCP server to Claude Desktop or Claude Code. The model gains four tools — <code>search_hotels</code>, <code>get_quote</code>, <code>get_deeplink</code>, <code>track</code> — and produces canonical booking links your readers can complete in one click.</p>
+
+  <div class="box">
+    <h2>Install in Claude Desktop</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">Add this to your <code>claude_desktop_config.json</code>:</p>
+<pre>{
+  "mcpServers": {
+    "impt": {
+      "command": "npx",
+      "args": ["-y", "@impt/mcp-server"],
+      "env": { "IMPT_PARTNER_KEY": "YOUR_KEY" }
+    }
+  }
+}</pre>
+  </div>
+
+  <div class="box">
+    <h2>Install in Claude Code</h2>
+<pre>claude mcp add impt npx -y @impt/mcp-server -e IMPT_PARTNER_KEY=YOUR_KEY</pre>
+  </div>
+
+  <div class="box">
+    <h2>HTTP transport (custom clients)</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">SSE: <code>https://swarm.impt.io/api/mcp/sse</code> · Streamable HTTP: <code>https://swarm.impt.io/api/mcp/http</code></p>
+    <p style="font-size:13px"><a href="/openapi.json">OpenAPI spec →</a></p>
+  </div>
+
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P1 — npm package <code>@impt/mcp-server</code> publishing this week. Until then this page is the install brief; the SSE/HTTP transports come up alongside.</p>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+</body></html>

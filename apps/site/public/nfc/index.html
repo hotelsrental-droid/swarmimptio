@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT × NFC — book hotels via NFC</title>
+<meta name="description" content="Tapped an IMPT-encoded NFC tag? Find a hotel — €5 free + 5% Goodness back, 1 tonne CO₂ offset.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="nfc">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × NFC</p>
+  <h1>Tap NFC. Book a hotel.</h1>
+  <p class="lede">Tapped an IMPT-encoded NFC tag? Find a hotel — €5 free + 5% Goodness back, 1 tonne CO₂ offset.</p>
+  <div class="row">
+    <a class="cta lime" href="#" id="book-now">Find a hotel →</a>
+    <a class="cta" href="/partners">Become a partner</a>
+  </div>
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P3 — NFC URL-record helper page comes online alongside QR + Wallet.</p>
+  </div>
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+</script>
+</body></html>

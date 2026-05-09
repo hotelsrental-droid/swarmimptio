@@ -1,0 +1,22 @@
+# swarm.impt.io routing rules
+# Format: <from>  <to>  <status>
+# Cloudflare Pages applies these BEFORE Pages Functions.
+
+# Channel aliases — short paths win, long names redirect to short.
+/whatsapp/*  /wa/:splat   301
+/telegram/*  /tg/:splat   301
+/instagram/* /ig/:splat   301
+/tiktok/*    /tt/:splat   301
+/twitter/*   /x/:splat    301
+/linkedin/*  /li/:splat   301
+/youtube/*   /yt/:splat   301
+/pinterest/* /pin/:splat  301
+/messenger/* /fb/:splat   301
+/imessage/*  /imsg/:splat 301
+
+# Voice variants
+/siri  /voice/siri  301
+/alexa /voice/alexa 301
+
+# Legacy partner sign-up alias
+/widget/signup /partners 301
