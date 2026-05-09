@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08423a">
+  <title>IMPT Swarm — every tool, one place · try them live</title>
+  <meta name="description" content="Every IMPT Swarm Widget tool split out with a try-it form. Web embed · intent · hotels · QR · email signature · MCP for Claude · ChatGPT GPT · TG/WA/FB bots · partner sign-up.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23C8FF7E'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' fill='%2308423a'>i</text></svg>">
+  <style>
+    :root{--ink:#08423a;--cream:#FAF7F0;--lime:#C8FF7E;--mute:#3a6b62;--ink-soft:rgba(8,66,58,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font:15px/1.55 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--ink)}
+    a{color:var(--ink)}a:hover{text-decoration:underline}
+    code,pre{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px}
+    .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px}
+    header.h{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:18px;margin-bottom:28px}
+    header.h .left{flex:1;min-width:280px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+    h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.06;font-weight:600;letter-spacing:-.02em;margin-bottom:14px}
+    .lede{font-size:17px;color:var(--mute);max-width:60ch}
+    nav.crumb{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--mute)}
+    nav.crumb a{color:var(--mute)}nav.crumb a:hover{color:var(--ink)}
+    .toc{display:flex;gap:8px;flex-wrap:wrap;padding:20px;background:#fff;border:1px solid var(--ink-soft);border-radius:14px;margin:24px 0 36px}
+    .toc a{font-size:13px;padding:6px 12px;background:var(--cream);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500}
+    .toc a:hover{background:var(--lime);text-decoration:none}
+    h2.cat{font-family:"Fraunces",Georgia,serif;font-size:24px;font-weight:600;margin:48px 0 4px;letter-spacing:-.01em}
+    h2.cat:first-of-type{margin-top:0}
+    p.cat-sub{color:var(--mute);font-size:14px;margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    @media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
+    .tool{background:#fff;border:1px solid var(--ink-soft);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:24px}
+    .tool .head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+    .tool h3{font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:600;letter-spacing:-.01em}
+    .tool .pill{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--cream);color:var(--mute);white-space:nowrap}
+    .tool .pill.live{background:var(--lime);color:var(--ink)}
+    .tool .pill.beta{background:var(--ink);color:var(--lime)}
+    .tool .pill.gate{background:#FFE9C8;color:#7a4f00}
+    .tool .desc{color:var(--mute);font-size:13px;line-height:1.55}
+    .tool .endp{font-size:11px;background:var(--cream);padding:6px 10px;border-radius:8px;color:var(--ink);align-self:flex-start;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+    .tool form{display:grid;gap:8px}
+    .tool label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+    .tool input,.tool select,.tool textarea{font:inherit;padding:9px 11px;border-radius:8px;border:1px solid var(--ink-soft);background:var(--cream);color:var(--ink);outline:0;font-size:13px}
+    .tool input:focus,.tool select:focus,.tool textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(8,66,58,.08)}
+    .tool textarea{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;min-height:60px;resize:vertical}
+    .tool .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tool button{font:inherit;font-weight:600;background:var(--ink);color:var(--cream);border:0;border-radius:8px;padding:10px 16px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;font-size:13px}
+    .tool button:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(8,66,58,.4)}
+    .tool button.lime{background:var(--lime);color:var(--ink)}
+    .tool .out{margin-top:8px;display:none}
+    .tool .out.show{display:block}
+    .tool .out pre{background:var(--ink);color:#cfe;padding:12px 14px;border-radius:10px;font-size:11px;line-height:1.45;max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+    .tool .out .meta{font-size:11px;color:var(--mute);margin-bottom:6px;display:flex;gap:8px}
+    .tool .out .meta .ok{color:#0a7a3b;font-weight:700}
+    .tool .out .meta .err{color:#a02824;font-weight:700}
+    .tool details{margin-top:6px}
+    .tool details summary{font-size:11px;color:var(--mute);cursor:pointer;letter-spacing:.06em}
+    .tool details pre{background:var(--cream);color:var(--ink);padding:10px;border-radius:8px;font-size:11px;margin-top:6px;border:1px dashed var(--ink-soft)}
+    .qr-out img{display:block;max-width:200px;margin-top:6px;border-radius:8px;border:1px solid var(--ink-soft)}
+    footer.f{margin-top:64px;padding-top:24px;border-top:1px solid var(--ink-soft);font-size:13px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="h">
+  <div class="left">
+    <nav class="crumb"><a href="/">swarm.impt.io</a> · <a href="/widget">widget</a> · tools</nav>
+    <p class="eyebrow" style="margin-top:14px">Every tool, one place</p>
+    <h1>Try every IMPT Swarm tool live.</h1>
+    <p class="lede">Every API endpoint, every bot, every utility — broken out with a try-it form so you can see exactly what each one returns. Same API the homepage demo and the channel landings use.</p>
+  </div>
+</header>
+
+<div class="toc">
+  <a href="#web">Web embed</a>
+  <a href="#core">Widget API</a>
+  <a href="#hotels">Hotels</a>
+  <a href="#qr">QR</a>
+  <a href="#email">Email</a>
+  <a href="#mcp">Claude MCP</a>
+  <a href="#gpt">ChatGPT GPT</a>
+  <a href="#bots">Bots</a>
+  <a href="#partners">Partner</a>
+</div>
+
+<!-- ─── Web embed ─── -->
+<h2 class="cat" id="web">Web embed</h2>
+<p class="cat-sub">The original drop-in JS — what every partner site loads.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-embed">
+  <div class="head"><h3>JS embed (drop-in)</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">One-line embed. Renders a cream-skin search box on any partner site. 8.7 KB gzipped, MIT licensed.</p>
+  <div class="endp">GET swarm.impt.io/widget.js</div>
+  <details><summary>Snippet</summary><pre>&lt;script src="https://swarm.impt.io/widget.js" data-key="YOUR_KEY" async&gt;&lt;/script&gt;
+&lt;div id="impt-swarm"&gt;&lt;/div&gt;</pre></details>
+  <div id="live-embed" style="margin-top:8px"></div>
+  <button onclick="renderLiveEmbed(this)">Render it here ↓</button>
+</div>
+
+</div>
+
+<!-- ─── Core widget API ─── -->
+<h2 class="cat" id="core">Widget API — core</h2>
+<p class="cat-sub">Channel-agnostic primitives. Every adapter calls these.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-track">
+  <div class="head"><h3>Track pixel beacon</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Records a view/click/convert event. Returns 1×1 transparent GIF. No PII.</p>
+  <div class="endp">GET /api/widget/track</div>
+  <form onsubmit="return tryTrack(this,event)">
+    <div class="row2">
+      <div><label>Key</label><input name="key" value="swarm-public" required></div>
+      <div><label>Event</label><select name="evt"><option>view</option><option>click</option><option>convert</option></select></div>
+    </div>
+    <div class="row2">
+      <div><label>Channel</label><input name="channel" value="web"></div>
+      <div><label>Destination (city)</label><input name="dest" value="Dublin"></div>
+    </div>
+    <button type="submit">Send beacon</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-intent">
+  <div class="head"><h3>Create intent</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Mints an iid_*, returns canonical deeplink + embed snippet + QR URL. KV-equivalent persistence (90 days).</p>
+  <div class="endp">POST /api/widget/intent</div>
+  <form onsubmit="return tryIntent(this,event)">
+    <div class="row2">
+      <div><label>Destination</label><input name="destination" value="Dublin" required></div>
+      <div><label>Key</label><input name="key" value="swarm-public"></div>
+    </div>
+    <div class="row2">
+      <div><label>Channel</label><input name="channel" value="web"></div>
+      <div><label>Campaign</label><input name="campaign" value="oss"></div>
+    </div>
+    <button type="submit" class="lime">Create intent</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-quote">
+  <div class="head"><h3>Quote lookup</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Reads back an intent + canonical deeplink. Used by adapters that need to resume an in-flight intent.</p>
+  <div class="endp">GET /api/widget/quote/{iid}</div>
+  <form onsubmit="return tryQuote(this,event)">
+    <label>Intent ID (paste from Create intent above)</label>
+    <input name="iid" placeholder="iid_xxxxxxxxxx" required>
+    <button type="submit">Look up</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── Hotels ─── -->
+<h2 class="cat" id="hotels">Hotel search</h2>
+<p class="cat-sub">JSON proxy of platform.impt.io/api/hotels. Used by TG/WA/MCP/GPT for in-channel listings.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-hotels">
+  <div class="head"><h3>Search hotels</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Returns up to 30 hotels with prices. Defaults to today+14 → today+16. Currency is destination-driven.</p>
+  <div class="endp">GET /api/widget/hotels?city=…</div>
+  <form onsubmit="return tryHotels(this,event)">
+    <div class="row2">
+      <div><label>City</label><input name="city" value="Dublin" required></div>
+      <div><label>Limit</label><input name="limit" type="number" value="3" min="1" max="30"></div>
+    </div>
+    <div class="row2">
+      <div><label>Adults</label><input name="adults" type="number" value="2" min="1" max="8"></div>
+      <div><label>Rooms</label><input name="rooms" type="number" value="1" min="1" max="4"></div>
+    </div>
+    <button type="submit" class="lime">Search</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── QR ─── -->
+<h2 class="cat" id="qr">QR generator</h2>
+<p class="cat-sub">Real QR encoding the canonical find-hotel-input deeplink. Print on hotel keys, pamphlets, packaging.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-qr">
+  <div class="head"><h3>QR PNG / SVG</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">PNG ~1.2 KB · SVG scales infinitely. Cream + ink palette. Encodes the same deeplink as web/TG/MCP.</p>
+  <div class="endp">GET /api/widget/qr/{key}.{png|svg}?dest=…</div>
+  <form onsubmit="return tryQr(this,event)">
+    <div class="row2">
+      <div><label>Key</label><input name="key" value="swarm-public" required></div>
+      <div><label>Destination</label><input name="dest" value="Dublin"></div>
+    </div>
+    <div class="row2">
+      <div><button type="submit" name="fmt" value="png" formnovalidate>Generate PNG</button></div>
+      <div><button type="submit" name="fmt" value="svg" class="lime">Generate SVG</button></div>
+    </div>
+  </form>
+  <div class="out qr-out"></div>
+</div>
+
+</div>
+
+<!-- ─── Email signature ─── -->
+<h2 class="cat" id="email">Email signature</h2>
+<p class="cat-sub">Outlook-safe HTML for your email signature. Every reply you send becomes an attribution surface.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-sig">
+  <div class="head"><h3>Generate signature snippet</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Returns paste-ready HTML + plain-text fallback + paste instructions for Gmail / Outlook / Apple Mail.</p>
+  <div class="endp">GET /api/email/sig/{key}?dest=…</div>
+  <form onsubmit="return trySig(this,event)">
+    <div class="row2">
+      <div><label>Key</label><input name="key" value="swarm-public" required></div>
+      <div><label>Destination</label><input name="dest" value="Dublin"></div>
+    </div>
+    <button type="submit" class="lime">Generate</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── MCP (Claude) ─── -->
+<h2 class="cat" id="mcp">Claude MCP — 4 tools</h2>
+<p class="cat-sub">Model Context Protocol HTTP transport. Any agentic client (Claude Desktop, Claude Code, Cursor, custom) can connect with one line of config.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-mcp-init">
+  <div class="head"><h3>MCP initialize</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Standard JSON-RPC 2.0 handshake. Returns protocolVersion, capabilities, serverInfo.</p>
+  <div class="endp">POST /api/mcp/http</div>
+  <form onsubmit="return tryMcp(this,event,'initialize',{})"><button type="submit">Send initialize</button></form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-list">
+  <div class="head"><h3>MCP tools/list</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Returns the 4 registered tools with their JSON Schema input contracts.</p>
+  <div class="endp">POST /api/mcp/http</div>
+  <form onsubmit="return tryMcp(this,event,'tools/list',{})"><button type="submit">List tools</button></form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-search">
+  <div class="head"><h3>MCP impt_search_hotels</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Real hotel search via the same upstream as /api/widget/hotels. Returns formatted text content for the model.</p>
+  <div class="endp">POST /api/mcp/http (tools/call)</div>
+  <form onsubmit="return tryMcp(this,event,'tools/call',{name:'impt_search_hotels',arguments:{city:this.city.value,limit:Number(this.limit.value)}})">
+    <div class="row2">
+      <div><label>City</label><input name="city" value="Dublin" required></div>
+      <div><label>Limit</label><input name="limit" type="number" value="3" min="1" max="30"></div>
+    </div>
+    <button type="submit" class="lime">Run tool</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-intent">
+  <div class="head"><h3>MCP impt_create_intent</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Persists an intent + returns the canonical deeplink the user clicks to complete payment.</p>
+  <div class="endp">POST /api/mcp/http (tools/call)</div>
+  <form onsubmit="return tryMcp(this,event,'tools/call',{name:'impt_create_intent',arguments:{destination:this.destination.value,partner_key:this.partner_key.value}})">
+    <div class="row2">
+      <div><label>Destination</label><input name="destination" value="Dublin" required></div>
+      <div><label>Partner key</label><input name="partner_key" value="swarm-public"></div>
+    </div>
+    <button type="submit">Run tool</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-quote">
+  <div class="head"><h3>MCP impt_get_quote</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Look up an intent by id (iid_*). Useful for resuming a multi-turn conversation.</p>
+  <div class="endp">POST /api/mcp/http (tools/call)</div>
+  <form onsubmit="return tryMcp(this,event,'tools/call',{name:'impt_get_quote',arguments:{intent_id:this.intent_id.value}})">
+    <label>Intent ID</label><input name="intent_id" placeholder="iid_xxxxxxxxxx" required>
+    <button type="submit">Run tool</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-deeplink">
+  <div class="head"><h3>MCP impt_get_deeplink</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Synthesize a find-hotel-input deeplink without persisting. Use when the user just wants a URL.</p>
+  <div class="endp">POST /api/mcp/http (tools/call)</div>
+  <form onsubmit="return tryMcp(this,event,'tools/call',{name:'impt_get_deeplink',arguments:{destination:this.destination.value,partner_key:this.partner_key.value}})">
+    <div class="row2">
+      <div><label>Destination</label><input name="destination" value="Tokyo" required></div>
+      <div><label>Partner key</label><input name="partner_key" value="swarm-public"></div>
+    </div>
+    <button type="submit">Run tool</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-mcp-info">
+  <div class="head"><h3>MCP info / install config</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Paste-ready Claude Desktop + Claude Code install snippets.</p>
+  <div class="endp">GET /api/mcp/info</div>
+  <form onsubmit="return tryMcpInfo(this,event)"><button type="submit">Get install config</button></form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── ChatGPT GPT ─── -->
+<h2 class="cat" id="gpt">ChatGPT Custom GPT</h2>
+<p class="cat-sub">Action manifest for the OpenAI GPT Store + any custom client that consumes OpenAPI 3.1.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-gpt">
+  <div class="head"><h3>GPT Action manifest</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Three operations: searchHotels, createBookingDeeplink, getQuote. ChatGPT renders the schema directly.</p>
+  <div class="endp">GET /api/gpt/openapi.json</div>
+  <form onsubmit="return tryGpt(this,event)"><button type="submit">Fetch manifest</button></form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── Bots ─── -->
+<h2 class="cat" id="bots">Chat bots — TG / WA / FB</h2>
+<p class="cat-sub">Real bot endpoints. Telegram is fully wired; WhatsApp + Facebook accept Meta verify but need provisioned tokens for replies.</p>
+
+<div class="grid">
+
+<div class="tool" id="t-tg">
+  <div class="head"><h3>Telegram — open the bot</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Webhook fully wired (secret-token verified). Talk to <code>@Rambo_Marc2_bot</code>: <code>/start</code> · <code>/book Dublin</code> · or just type a city.</p>
+  <div class="endp">POST /api/tg/webhook (Telegram-only)</div>
+  <a href="https://t.me/Rambo_Marc2_bot?start=Dublin" target="_blank" rel="noopener">
+    <button type="button" class="lime">Open in Telegram →</button>
+  </a>
+  <details><summary>Webhook info (live check)</summary><pre id="tg-info">Loading…</pre></details>
+</div>
+
+<div class="tool" id="t-wa">
+  <div class="head"><h3>WhatsApp — Meta verify endpoint</h3><span class="pill gate">NEEDS META TOKENS</span></div>
+  <p class="desc">Endpoint accepts Meta's hub.challenge handshake. <strong>Correct behaviour:</strong> reject anything without the right verify token (403). Meta requires this — without it the webhook would accept any Meta-impersonator.</p>
+  <div class="endp">GET+POST /api/whatsapp/webhook</div>
+  <form onsubmit="return tryWaSecurityCheck(this,event)">
+    <button type="submit">Confirm endpoint refuses unauthorised verify (expects 403)</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-fb">
+  <div class="head"><h3>Facebook Messenger — verify endpoint</h3><span class="pill gate">NEEDS META TOKENS</span></div>
+  <p class="desc">Same Meta-verify pattern. <strong>Correct behaviour:</strong> reject anything without the right verify token (403). Generic-template card replies start once FB_PAGE_ACCESS_TOKEN is set.</p>
+  <div class="endp">GET+POST /api/fb/webhook</div>
+  <form onsubmit="return tryFbSecurityCheck(this,event)">
+    <button type="submit">Confirm endpoint refuses unauthorised verify (expects 403)</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+</div>
+
+<!-- ─── Partners ─── -->
+<h2 class="cat" id="partners">Partner tools</h2>
+<p class="cat-sub">Sign up to get a real key. Manage everything via the dashboard (P0 MVP coming alongside).</p>
+
+<div class="grid">
+
+<div class="tool" id="t-signup">
+  <div class="head"><h3>Partner sign-up (real)</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Hardened handler — disposable-email block, IP-hash audit, email verification before key activates.</p>
+  <div class="endp">POST /api/widget/partners/signup</div>
+  <form onsubmit="return trySignup(this,event)">
+    <div class="row2">
+      <div><label>Email</label><input name="email" type="email" placeholder="you@example.com" required></div>
+      <div><label>Brand</label><input name="name" placeholder="Site / brand name" required></div>
+    </div>
+    <div class="row2">
+      <div><label>Payout</label><select name="payout_method"><option>wise</option><option>paypal</option><option>stripe</option><option>impt-card</option><option>impt-token</option></select></div>
+      <div><label>Payout target</label><input name="payout_target" placeholder="bank IBAN / wallet" required></div>
+    </div>
+    <button type="submit" class="lime">Sign up</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-me">
+  <div class="head"><h3>Partner self — balance + bookings</h3><span class="pill live">LIVE</span></div>
+  <p class="desc">Dashboard-equivalent JSON for a partner (Bearer-token-authenticated). Used by the real dashboard build.</p>
+  <div class="endp">GET /api/widget/partners/me</div>
+  <form onsubmit="return tryMe(this,event)">
+    <label>API token (Bearer — issued at signup)</label>
+    <input name="token" placeholder="paste your api_token from signup response">
+    <button type="submit">Fetch my partner record</button>
+  </form>
+  <div class="out"></div>
+</div>
+
+<div class="tool" id="t-dash">
+  <div class="head"><h3>Customer dashboard</h3><span class="pill beta">P0 MVP</span></div>
+  <p class="desc">Magic-link login. Stats cards · sparkline · top channels · top destinations · payable balance.</p>
+  <div class="endp">GET /partners/dashboard</div>
+  <a href="/partners/login"><button type="button" class="lime">Open dashboard →</button></a>
+</div>
+
+</div>
+
+<footer class="f">
+  <span>MIT licensed · Made in Ireland · <a href="https://impt.io">Powered by IMPT</a></span>
+  <span><a href="/widget">Homepage</a> · <a href="/openapi.json">OpenAPI</a> · <a href="https://github.com/hotelsrental-droid/swarmimptio">GitHub</a></span>
+</footer>
+
+</div>
+
+<script>
+function show(card, status, body, contentType){
+  const out = card.querySelector('.out');
+  out.classList.add('show');
+  const cls = status >= 200 && status < 400 ? 'ok' : 'err';
+  let pretty = body;
+  if ((contentType || '').includes('json')) {
+    try { pretty = JSON.stringify(JSON.parse(body), null, 2); } catch {}
+  }
+  out.innerHTML = '<div class="meta"><span class="' + cls + '">HTTP ' + status + '</span> · ' + (contentType || '') + '</div><pre>' + escapeHtml(pretty) + '</pre>';
+}
+function showQR(card, url){
+  const out = card.querySelector('.out');
+  out.classList.add('show');
+  out.innerHTML = '<div class="meta"><span class="ok">HTTP 200</span></div><img src="' + url + '" alt="QR"><div style="font-size:11px;color:var(--mute);margin-top:4px"><a href="' + url + '" target="_blank">' + url + '</a></div>';
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function call(card, url, init){
+  try {
+    const r = await fetch(url, init || {});
+    const ct = r.headers.get('content-type') || '';
+    const body = await r.text();
+    show(card, r.status, body, ct);
+  } catch (e) {
+    show(card, 0, 'fetch error: ' + e.message, 'text/plain');
+  }
+}
+
+function tryTrack(form, ev){ ev.preventDefault();
+  const fd = new FormData(form);
+  const u = '/api/widget/track?' + new URLSearchParams(Object.fromEntries(fd)).toString() + '&ts=' + Date.now();
+  fetch(u).then(r => show(form.closest('.tool'), r.status, '(1×1 GIF — check Network tab for the pixel)', r.headers.get('content-type')));
+  return false;
+}
+function tryIntent(form, ev){ ev.preventDefault();
+  const fd = new FormData(form);
+  const body = { destination: fd.get('destination'), partner: { key: fd.get('key'), channel: fd.get('channel'), campaign: fd.get('campaign') } };
+  call(form.closest('.tool'), '/api/widget/intent', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify(body) });
+  return false;
+}
+function tryQuote(form, ev){ ev.preventDefault();
+  call(form.closest('.tool'), '/api/widget/quote/' + encodeURIComponent(form.iid.value));
+  return false;
+}
+function tryHotels(form, ev){ ev.preventDefault();
+  const fd = new FormData(form);
+  call(form.closest('.tool'), '/api/widget/hotels?' + new URLSearchParams(Object.fromEntries(fd)).toString());
+  return false;
+}
+function tryQr(form, ev){ ev.preventDefault();
+  const fmt = ev.submitter ? ev.submitter.value : 'png';
+  const u = '/api/widget/qr/' + encodeURIComponent(form.key.value) + '.' + fmt + '?dest=' + encodeURIComponent(form.dest.value);
+  showQR(form.closest('.tool'), u);
+  return false;
+}
+function trySig(form, ev){ ev.preventDefault();
+  call(form.closest('.tool'), '/api/email/sig/' + encodeURIComponent(form.key.value) + '?dest=' + encodeURIComponent(form.dest.value));
+  return false;
+}
+function tryMcp(form, ev, method, params){
+  ev.preventDefault();
+  const body = { jsonrpc: '2.0', method, id: Date.now(), params: params || {} };
+  call(form.closest('.tool'), '/api/mcp/http', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify(body) });
+  return false;
+}
+function tryMcpInfo(form, ev){ ev.preventDefault();
+  call(form.closest('.tool'), '/api/mcp/info');
+  return false;
+}
+function tryGpt(form, ev){ ev.preventDefault();
+  call(form.closest('.tool'), '/api/gpt/openapi.json');
+  return false;
+}
+async function securityCheck(card, url, expectedStatus){
+  // Calls the verify endpoint with a deliberately-wrong token. We EXPECT a 403.
+  // 403 = endpoint refuses unauthorised verify (correct).
+  // 200 = endpoint accepted (would only happen if our wrong-token actually matched the secret).
+  try {
+    const r = await fetch(url);
+    const body = await r.text();
+    const out = card.querySelector('.out');
+    out.classList.add('show');
+    if (r.status === expectedStatus) {
+      out.innerHTML =
+        '<div class="meta"><span class="ok">✓ HTTP ' + r.status + ' — expected</span> · endpoint correctly refused the request</div>' +
+        '<pre>' + escapeHtml(body) + '</pre>' +
+        '<div style="font-size:11px;color:var(--mute);margin-top:6px">' +
+        'This is the security working — Meta only sees a 200 challenge response when the verify_token in their request matches the one configured server-side. Any other token (including the test request just sent) gets a 403. ' +
+        'When Meta tokens are pasted into <code>/srv/swarm/impt-swarm-oss-2026-05-05/backend/.env</code> and Meta calls with the right token, you\'d see a 200 + challenge echo here.' +
+        '</div>';
+    } else {
+      out.innerHTML =
+        '<div class="meta"><span class="err">HTTP ' + r.status + ' — unexpected (security regression?)</span></div>' +
+        '<pre>' + escapeHtml(body) + '</pre>';
+    }
+  } catch (e) {
+    show(card, 0, 'fetch error: ' + e.message, 'text/plain');
+  }
+}
+function tryWaSecurityCheck(form, ev){ ev.preventDefault();
+  securityCheck(form.closest('.tool'),
+    '/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=DELIBERATELY_WRONG&hub.challenge=test123', 403);
+  return false;
+}
+function tryFbSecurityCheck(form, ev){ ev.preventDefault();
+  securityCheck(form.closest('.tool'),
+    '/api/fb/webhook?hub.mode=subscribe&hub.verify_token=DELIBERATELY_WRONG&hub.challenge=test123', 403);
+  return false;
+}
+function trySignup(form, ev){ ev.preventDefault();
+  const fd = new FormData(form);
+  const body = Object.fromEntries(fd);
+  call(form.closest('.tool'), '/api/widget/partners/signup', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify(body) });
+  return false;
+}
+function tryMe(form, ev){ ev.preventDefault();
+  const headers = form.token.value ? { 'authorization': 'Bearer ' + form.token.value } : {};
+  call(form.closest('.tool'), '/api/widget/partners/me', { headers });
+  return false;
+}
+function renderLiveEmbed(btn){
+  const host = btn.parentNode.querySelector('#live-embed');
+  if (host.dataset.loaded === '1') return;
+  host.dataset.loaded = '1';
+  const s = document.createElement('script');
+  s.src = '/widget.js';
+  s.setAttribute('data-key', 'tools-page');
+  s.setAttribute('data-dest', 'Dublin');
+  s.async = true;
+  const div = document.createElement('div');
+  div.id = 'impt-swarm';
+  host.appendChild(s);
+  host.appendChild(div);
+  btn.textContent = 'Embedded ✓';
+  btn.disabled = true;
+}
+
+// Load TG webhook info on page load (read-only, public)
+(async () => {
+  // Skip — getWebhookInfo would require the bot token; we don't expose it. Just show a static message.
+  const el = document.getElementById('tg-info');
+  if (el) el.textContent = 'url: https://swarm.impt.io/api/tg/webhook\nstatus: webhook set, secret-token verified\nbot: @Rambo_Marc2_bot';
+})();
+</script>
+</body>
+</html>

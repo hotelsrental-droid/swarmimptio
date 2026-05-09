@@ -17,9 +17,7 @@
 <pre>{
   "mcpServers": {
     "impt": {
-      "command": "npx",
-      "args": ["-y", "@impt/mcp-server"],
-      "env": { "IMPT_PARTNER_KEY": "YOUR_KEY" }
+      "url": "https://swarm.impt.io/api/mcp/http"
     }
   }
 }</pre>
@@ -27,18 +25,29 @@
 
   <div class="box">
     <h2>Install in Claude Code</h2>
-<pre>claude mcp add impt npx -y @impt/mcp-server -e IMPT_PARTNER_KEY=YOUR_KEY</pre>
+<pre>claude mcp add impt --transport http --url https://swarm.impt.io/api/mcp/http</pre>
   </div>
 
   <div class="box">
-    <h2>HTTP transport (custom clients)</h2>
-    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">SSE: <code>https://swarm.impt.io/api/mcp/sse</code> · Streamable HTTP: <code>https://swarm.impt.io/api/mcp/http</code></p>
-    <p style="font-size:13px"><a href="/openapi.json">OpenAPI spec →</a></p>
+    <h2>Endpoints (live now)</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">Streamable HTTP transport — <a href="/api/mcp/http"><code>swarm.impt.io/api/mcp/http</code></a></p>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:10px">Server info (paste-ready config) — <a href="/api/mcp/info"><code>swarm.impt.io/api/mcp/info</code></a></p>
+    <p style="color:var(--mute);font-size:14px"><a href="/api/gpt/openapi.json">OpenAPI Action manifest →</a> (use for ChatGPT GPTs and generic agents)</p>
+  </div>
+
+  <div class="box">
+    <h2>Tools available</h2>
+    <ul style="color:var(--mute);font-size:14px;line-height:1.9;padding-left:20px">
+      <li><code>impt_search_hotels(city, adults?, rooms?, limit?)</code> — JSON list of hotels</li>
+      <li><code>impt_create_intent(destination, partner_key?)</code> — booking intent + canonical deeplink</li>
+      <li><code>impt_get_quote(intent_id)</code> — look up an intent by id</li>
+      <li><code>impt_get_deeplink(destination, partner_key?)</code> — synthesize a deeplink without persisting</li>
+    </ul>
   </div>
 
   <div class="box">
     <h2>Status</h2>
-    <p style="color:var(--mute);font-size:14px">P1 — npm package <code>@impt/mcp-server</code> publishing this week. Until then this page is the install brief; the SSE/HTTP transports come up alongside.</p>
+    <p style="color:var(--mute);font-size:14px">✅ <strong>LIVE</strong> 2026-05-09 — Streamable HTTP transport active. Tool calls are stateless JSON-RPC 2.0; intents persist 90 days.</p>
   </div>
 
   <footer>
