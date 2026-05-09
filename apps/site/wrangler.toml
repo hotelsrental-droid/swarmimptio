@@ -2,15 +2,6 @@
 #
 # Deploy via: wrangler pages deploy public --project-name=swarm-impt --branch=main
 # Or wire CF Pages "Connect to Git" UI to this repo + branch=main; build command = `npm run site:build`; output = `apps/site/public`.
-#
-# Env (set in CF Pages dashboard, NOT committed):
-#   STRIPE_SECRET_KEY      — for /api/widget/{reserve,pay,webhook} (Stripe Checkout sessions)
-#   MONGO_URI              — IMPT cluster, collection `widget_intents`
-#   IMPT_API_BASE          — internal proxy for /api/widget/hotels (defaults to https://app.impt.io/api)
-#   TG_BOT_TOKEN           — Telegram bot token (P1)
-#   WA_PHONE_NUMBER_ID     — WhatsApp Cloud API (P1)
-#   WA_TOKEN               — WhatsApp Cloud API (P1)
-#   ALERT_WEBHOOK          — uptime + conversion alerts → mike@ relay
 
 name = "swarm-impt"
 compatibility_date = "2026-05-09"
@@ -20,3 +11,32 @@ pages_build_output_dir = "public"
 SCHEMA_VERSION = "1"
 PUBLIC_HOST = "swarm.impt.io"
 REDIRECT_BASE = "https://app.impt.io/find-hotel-input"
+SENDGRID_FROM_NAME = "IMPT Swarm"
+
+# KV namespaces — bound at runtime. Create in CF dashboard, then paste IDs here:
+#   wrangler kv:namespace create INTENTS
+#   wrangler kv:namespace create PARTNERS
+#   wrangler kv:namespace create ANALYTICS
+[[kv_namespaces]]
+binding = "INTENTS"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "PARTNERS"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "ANALYTICS"
+id = "REPLACE_WITH_KV_ID"
+
+# Secrets — set via the CF Pages dashboard, NEVER committed:
+#   STRIPE_SECRET_KEY        — IMPT marketplace Stripe (read from vercel-env-backup/impt-marketplace.env)
+#   STRIPE_WEBHOOK_SECRET    — Stripe → swarm webhook signature
+#   SENDGRID_API_KEY         — partner welcome emails
+#   SENDGRID_FROM_EMAIL      — partners@impt.io or swarm-widget@impt.io
+#   ALERT_WEBHOOK            — uptime alerts → mike@ relay
+#   IMPT_API_BASE            — defaults to https://platform.impt.io/api (NOT app.impt.io)
+#   IMPT_API_TOKEN           — if internal API requires auth (currently /api/hotels is public)
+#   TG_BOT_TOKEN             — Telegram bot (P1)
+#   WA_PHONE_NUMBER_ID       — WhatsApp Cloud API (P1)
+#   WA_TOKEN                 — WhatsApp Cloud API (P1)

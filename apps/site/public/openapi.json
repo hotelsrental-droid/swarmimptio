@@ -41,19 +41,34 @@
     },
     "/api/widget/hotels": {
       "get": {
-        "summary": "JSON hotel search (P0.5 — wired to IMPT internal API)",
+        "summary": "JSON hotel search — proxied from platform.impt.io with edge caching",
         "parameters": [
-          { "name": "city", "in": "query", "required": true, "schema": { "type": "string" } },
-          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+          { "name": "city", "in": "query", "required": true, "schema": { "type": "string" }, "description": "CITY name (never country) — must match adapters/_shared/src/cities.ts" },
+          { "name": "key", "in": "query", "schema": { "type": "string", "default": "swarm-public" } },
+          { "name": "channel", "in": "query", "schema": { "type": "string", "default": "widget" } },
+          { "name": "adults", "in": "query", "schema": { "type": "integer", "default": 2, "minimum": 1, "maximum": 8 } },
+          { "name": "rooms", "in": "query", "schema": { "type": "integer", "default": 1, "minimum": 1, "maximum": 4 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 30 } },
+          { "name": "checkIn", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "checkOut", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "currency", "in": "query", "schema": { "type": "string" } }
         ],
-        "responses": { "501": { "description": "Not implemented in P0" } }
+        "responses": {
+          "200": { "description": "Hotel list (Gimmonix-mapped)" },
+          "400": { "description": "Bad request" },
+          "502": { "description": "Upstream platform.impt.io error" }
+        }
       }
     },
     "/api/widget/quote/{iid}": {
       "get": {
-        "summary": "Live quote for an intent (P0.5)",
+        "summary": "Read intent + return summary deeplink",
         "parameters": [{ "name": "iid", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "501": { "description": "Not implemented in P0" } }
+        "responses": {
+          "200": { "description": "Intent summary" },
+          "400": { "description": "Invalid iid" },
+          "404": { "description": "Intent not found" }
+        }
       }
     },
     "/api/widget/reserve": {
@@ -70,7 +85,41 @@
       }
     },
     "/api/partners/signup": {
-      "post": { "summary": "Self-serve partner sign-up — issue a partner key (P0.5)", "responses": { "501": { "description": "Not implemented in P0" } } }
+      "post": {
+        "summary": "Self-serve partner sign-up — issues a key + sends welcome email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "brand", "payout"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "brand": { "type": "string" },
+                  "payout": { "type": "string", "enum": ["wise", "paypal", "stripe", "impt-card", "impt-token"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Key issued" },
+          "200": { "description": "Existing key returned (idempotent on email)" },
+          "400": { "description": "Bad request" }
+        }
+      }
+    },
+    "/api/partners/me": {
+      "get": {
+        "summary": "Partner dashboard — sign-up record + lifetime stats",
+        "parameters": [{ "name": "key", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Partner record + stats" },
+          "400": { "description": "Invalid key" },
+          "404": { "description": "Partner not found" }
+        }
+      }
     }
   },
   "components": {

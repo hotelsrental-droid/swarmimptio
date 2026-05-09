@@ -3,6 +3,45 @@
 
 ---
 
+## 2026-05-09 (later) — PR #2 opened (Claude session)
+
+### Phase
+P0.5 — Mongo wire + hotels proxy + partner sign-up.
+
+### What this PR does
+- Real `GET /api/widget/hotels` — proxies `platform.impt.io/api/hotels` with edge cache
+- Real `POST /api/widget/intent` — writes to KV `INTENTS` namespace (90-day TTL)
+- Real `GET /api/widget/quote/{iid}` — reads from KV, returns deeplink
+- Real `POST /api/partners/signup` — issues `prt_<8>` key, KV-persists, Sendgrid welcome
+- Real `GET /api/partners/me` — partner dashboard data
+- Shared lib: `_lib/{json,kv,keys,sendgrid}.ts`
+- Mgmt-server cron: `ops/sync-mongo.mjs` drains KV → Mongo `widget_intents/_partners/_events`
+
+### Architecture decision: KV-then-Mongo
+CF Pages Functions can't speak `mongodb+srv://` (no raw TCP). Live writes go to KV
+(edge-native, low latency); a nightly cron on the mgmt server (which has direct DB
+access) drains KV → Mongo for long-term storage and the partner PnL ledger.
+
+### What this PR does NOT do
+- `/api/widget/reserve` — still a 501. Needs Gimmonix integration in P1.
+- `/api/widget/pay` — still a 501. In-chat Stripe Checkout sessions land in PR #4 with the TG/WA bots.
+- `/api/widget/webhook/{key}` — still a 501. Conversion attribution loop closes only when find-hotel-input forwards `iid` to Stripe metadata — that's a 1-line change Henry has to make in `apps/marketplace`. Brief in `ops/HENRY-ASK.md` (next).
+
+### Mike action items (after merge)
+1. Merge PR #2 (cycle 2 of autonomy ramp)
+2. CF dashboard → swarm-impt project → Settings → KV bindings:
+   - `wrangler kv:namespace create INTENTS` → paste ID into wrangler.toml
+   - same for PARTNERS, ANALYTICS
+3. CF dashboard → Settings → Environment Variables — paste from `apps/site/.env.example`:
+   - SENDGRID_API_KEY + SENDGRID_FROM_EMAIL (verified sender)
+   - STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET (defer until /pay lands)
+4. Mgmt server crontab:
+   ```
+   30 3 * * *  cd /home/mike/swarmimptio && node ops/sync-mongo.mjs >> /var/log/swarm-sync.log 2>&1
+   ```
+
+---
+
 ## 2026-05-09 — P0 spine PR opened (Claude session)
 
 ### Phase
