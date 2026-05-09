@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08423a">
+  <title>Partner dashboard — IMPT Swarm</title>
+  <meta name="description" content="Partner dashboard — your clicks, bookings, earned, payable balance, per-channel breakdown. Magic link from your verify email.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23C8FF7E'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' fill='%2308423a'>i</text></svg>">
+  <style>
+    :root{--ink:#08423a;--cream:#FAF7F0;--lime:#C8FF7E;--mute:#3a6b62;--ink-soft:rgba(8,66,58,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font:15px/1.55 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+    a{color:var(--ink)}a:hover{text-decoration:underline}
+    code,pre{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px}
+    .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px}
+    nav.crumb{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mute);margin-bottom:24px}
+    nav.crumb a{color:var(--mute)}
+    nav.crumb a:hover{color:var(--ink)}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+    h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,4vw,40px);line-height:1.06;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+    .lede{font-size:16px;color:var(--mute);margin-bottom:32px}
+    h2{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:600;margin:32px 0 14px;letter-spacing:-.01em}
+
+    /* Login screen */
+    .login-card{max-width:480px;margin:48px auto;background:#fff;border:1px solid var(--ink-soft);border-radius:18px;padding:32px;box-shadow:0 24px 64px -32px rgba(8,66,58,.18)}
+    .login-card form{display:grid;gap:12px;margin-top:18px}
+    .login-card input{font:inherit;padding:14px 16px;border-radius:12px;border:1px solid var(--ink-soft);background:var(--cream);color:var(--ink);outline:0;font-size:14px}
+    .login-card input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(8,66,58,.08)}
+    .login-card button{font:inherit;font-weight:600;background:var(--lime);color:var(--ink);border:0;border-radius:12px;padding:14px 22px;cursor:pointer;font-size:14px;transition:transform .15s,box-shadow .15s}
+    .login-card button:hover{transform:translateY(-1px);box-shadow:0 12px 28px -8px rgba(8,66,58,.35)}
+    .login-card .hint{font-size:13px;color:var(--mute);margin-top:14px;line-height:1.5}
+    .login-card .err{color:#a02824;font-size:13px;margin-top:8px}
+
+    /* Dashboard layout */
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+    .topbar .who{display:flex;flex-direction:column;gap:2px}
+    .topbar .who .brand{font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:600}
+    .topbar .who .key{font-size:11px;color:var(--mute);font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+    .topbar .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+    .btn.lime{background:var(--lime);color:var(--ink)}
+    .btn.ink{background:var(--ink);color:var(--cream)}
+    .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--ink-soft)}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(8,66,58,.3);text-decoration:none}
+
+    /* Status pill */
+    .status{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--cream);color:var(--mute)}
+    .status.active{background:var(--lime);color:var(--ink)}
+    .status.pending{background:#FFE9C8;color:#7a4f00}
+    .status.suspended,.status.banned{background:#FCD2CD;color:#a02824}
+
+    /* Cards */
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+    @media(min-width:680px){.cards{grid-template-columns:repeat(4,1fr)}}
+    .card{background:#fff;border:1px solid var(--ink-soft);border-radius:14px;padding:18px}
+    .card .n{font-family:"Fraunces",Georgia,serif;font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
+    .card .l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+    .card .sub{font-size:12px;color:var(--mute);margin-top:4px}
+
+    /* Two-column section */
+    .two-col{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
+    @media(min-width:780px){.two-col{grid-template-columns:1fr 1fr}}
+    .panel{background:#fff;border:1px solid var(--ink-soft);border-radius:14px;padding:20px}
+    .panel h3{font-family:"Fraunces",Georgia,serif;font-size:16px;font-weight:600;margin-bottom:14px}
+    .panel ul{list-style:none}
+    .panel li{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--ink-soft);font-size:14px}
+    .panel li:last-child{border-bottom:0}
+    .panel li .name{font-weight:500}
+    .panel li .meta{font-size:12px;color:var(--mute)}
+    .panel .empty{font-size:13px;color:var(--mute);text-align:center;padding:18px 0}
+
+    /* Bookings table */
+    table.bk{width:100%;border-collapse:collapse;margin-top:8px}
+    table.bk th,table.bk td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--ink-soft);font-size:13px}
+    table.bk th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600}
+    table.bk tr:last-child td{border-bottom:0}
+    table.bk td.amt{text-align:right;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+    @media(max-width:620px){
+      table.bk thead{display:none}
+      table.bk tr{display:block;padding:10px 0;border-bottom:1px solid var(--ink-soft)}
+      table.bk td{display:flex;justify-content:space-between;padding:4px 0;border:0;font-size:13px}
+      table.bk td::before{content:attr(data-l);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600}
+    }
+
+    /* Embed snippet box */
+    .snippet{background:#fff;border:1px solid var(--ink-soft);border-radius:14px;padding:18px;margin-bottom:24px}
+    .snippet h3{font-family:"Fraunces",Georgia,serif;font-size:16px;font-weight:600;margin-bottom:10px}
+    .snippet pre{background:var(--ink);color:#cfe;padding:14px 18px;border-radius:10px;overflow-x:auto;font-size:12px;line-height:1.55}
+    .snippet .copy{margin-top:10px;font-size:12px;color:var(--mute)}
+
+    .err-banner{background:#FCD2CD;color:#7a1f17;padding:14px 18px;border-radius:12px;margin-bottom:18px;font-size:14px}
+
+    footer.f{margin-top:48px;padding-top:24px;border-top:1px solid var(--ink-soft);font-size:13px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN VIEW (default — hidden when authed) -->
+<div id="view-login" class="wrap" style="display:none">
+  <nav class="crumb"><span><a href="/">swarm.impt.io</a> · partner dashboard</span><a href="/widget">← back</a></nav>
+
+  <div class="login-card">
+    <p class="eyebrow">Partner sign-in</p>
+    <h1 style="font-size:26px">Welcome back.</h1>
+    <p class="lede" style="font-size:14px">Paste the API token from your verify email to see your stats, bookings and payouts.</p>
+    <form id="login-form" autocomplete="off">
+      <input id="api-token" name="api_token" type="password" placeholder="Paste your api_token here" required autofocus spellcheck="false">
+      <button type="submit">Open my dashboard →</button>
+    </form>
+    <p id="login-err" class="err" style="display:none"></p>
+    <p class="hint">
+      <strong>Where do I get my api_token?</strong><br>
+      It was in the email titled <em>"Confirm your IMPT Swarm partner key"</em> after you verified your email at <a href="/partners">swarm.impt.io/partners</a>. Format: 43-char base64.<br><br>
+      <strong>Lost it?</strong> Contact partners@impt.io and we'll regenerate.<br>
+      <strong>No partner key yet?</strong> <a href="/partners">Sign up here</a> — takes 60 seconds.
+    </p>
+  </div>
+
+  <footer class="f">
+    <span>MIT licensed · Made in Ireland · <a href="https://impt.io">Powered by IMPT</a></span>
+    <span><a href="/widget">Homepage</a> · <a href="/tools">Tools</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+
+<!-- DASHBOARD VIEW -->
+<div id="view-dash" class="wrap" style="display:none">
+  <nav class="crumb"><span><a href="/">swarm.impt.io</a> · partner dashboard</span><a href="#" id="logout-link">Sign out</a></nav>
+
+  <div id="err-banner" class="err-banner" style="display:none"></div>
+
+  <div class="topbar">
+    <div class="who">
+      <span class="brand" id="brand">…</span>
+      <span class="key" id="key-display">…</span>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" id="links-btn" href="/widget#channels">Per-channel links</a>
+      <a class="btn ghost" href="/tools">All tools</a>
+      <a class="btn ink" href="mailto:partners@impt.io?subject=IMPT%20Swarm%20question">Get help</a>
+    </div>
+  </div>
+
+  <p class="eyebrow">Last 30 days</p>
+  <div class="cards">
+    <div class="card"><div class="n" id="c-clicks">–</div><div class="l">Clicks</div><div class="sub">Last 30d</div></div>
+    <div class="card"><div class="n" id="c-bookings">–</div><div class="l">Bookings</div><div class="sub">All time</div></div>
+    <div class="card"><div class="n" id="c-earned">–</div><div class="l">Earned</div><div class="sub">All time</div></div>
+    <div class="card"><div class="n" id="c-payable">–</div><div class="l">Payable</div><div class="sub">Now</div></div>
+  </div>
+
+  <div class="snippet">
+    <h3>Drop the widget on any site</h3>
+    <pre id="embed-snippet">Loading your key…</pre>
+    <p class="copy"><button class="btn lime" id="copy-embed" type="button">Copy snippet</button> &nbsp;<span id="copy-msg" style="font-size:12px;color:var(--mute)"></span></p>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Per-channel links</h3>
+      <ul id="channel-list">
+        <li><span class="name">Web embed</span><span class="meta"><a href="#" data-link="/widget">copy</a></span></li>
+        <li><span class="name">Telegram</span><span class="meta"><a href="#" data-link="/tg">copy</a></span></li>
+        <li><span class="name">WhatsApp</span><span class="meta"><a href="#" data-link="/wa">copy</a></span></li>
+        <li><span class="name">Instagram</span><span class="meta"><a href="#" data-link="/ig">copy</a></span></li>
+        <li><span class="name">Email signature</span><span class="meta"><a href="#" data-link="/email">copy</a></span></li>
+        <li><span class="name">QR code</span><span class="meta"><a href="#" data-link="/qr">copy</a></span></li>
+        <li><span class="name">Claude MCP</span><span class="meta"><a href="#" data-link="/mcp">copy</a></span></li>
+        <li><span class="name">ChatGPT GPT</span><span class="meta"><a href="#" data-link="/gpt">copy</a></span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Your details</h3>
+      <ul>
+        <li><span class="name">Status</span><span id="d-status" class="meta"><span class="status pending">…</span></span></li>
+        <li><span class="name">Email</span><span id="d-email" class="meta">…</span></li>
+        <li><span class="name">Brand</span><span id="d-brand" class="meta">…</span></li>
+        <li><span class="name">Payout method</span><span id="d-payout" class="meta">…</span></li>
+        <li><span class="name">Joined</span><span id="d-joined" class="meta">…</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Recent bookings <span style="font-size:12px;color:var(--mute);font-weight:400">(latest 100)</span></h3>
+    <div id="bk-wrap"><div class="empty">Loading…</div></div>
+  </div>
+
+  <footer class="f">
+    <span>MIT licensed · Made in Ireland · <a href="https://impt.io">Powered by IMPT</a></span>
+    <span><a href="/widget">Homepage</a> · <a href="/tools">Tools</a> · <a href="https://github.com/hotelsrental-droid/swarmimptio">GitHub</a></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const KEY = 'impt_swarm_api_token';
+
+  function $(s){ return document.querySelector(s); }
+  function show(view){
+    document.getElementById('view-login').style.display = view === 'login' ? 'block' : 'none';
+    document.getElementById('view-dash').style.display = view === 'dash' ? 'block' : 'none';
+  }
+  function setErr(msg){
+    const e = document.getElementById('login-err');
+    e.style.display = msg ? 'block' : 'none';
+    e.textContent = msg || '';
+  }
+  function fmtCents(c){ return (c/100).toFixed(2); }
+  function fmtDate(s){ if(!s) return '—'; const d = new Date(s*1000); return d.toISOString().slice(0,10); }
+  function escHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  async function loadDashboard(token){
+    try {
+      const r = await fetch('/api/widget/partners/me', { headers: { 'authorization': 'Bearer ' + token } });
+      if (r.status === 401) { logout(); setErr('Token rejected — paste a fresh one.'); return; }
+      if (!r.ok) { setErr('Server returned ' + r.status); return; }
+      const data = await r.json();
+      render(data, token);
+      show('dash');
+    } catch (e) {
+      setErr('Network error: ' + e.message);
+    }
+  }
+
+  function render(d, token){
+    const p = d.partner || {};
+    document.getElementById('brand').textContent = p.name || p.email || 'Partner';
+    document.getElementById('key-display').textContent = p.key;
+    const stat = (p.status || 'pending').toLowerCase();
+    document.getElementById('d-status').innerHTML = '<span class="status ' + stat + '">' + escHtml(stat) + '</span>';
+    document.getElementById('d-email').textContent = p.email || '—';
+    document.getElementById('d-brand').textContent = p.name || '—';
+    document.getElementById('d-payout').textContent = p.payout_method || '—';
+    document.getElementById('d-joined').textContent = fmtDate(p.created_at);
+
+    document.getElementById('c-clicks').textContent = (d.clicks_30d || 0).toLocaleString();
+    const bks = d.bookings || [];
+    document.getElementById('c-bookings').textContent = bks.length;
+    const earned = bks.reduce((s,b) => s + (b.accrual_eur_cents || 0), 0);
+    document.getElementById('c-earned').textContent = '€' + fmtCents(earned);
+    document.getElementById('c-payable').textContent = '€' + fmtCents(d.balance_eur_cents || 0);
+
+    // Embed snippet
+    const snippet = '<script src="https://swarm.impt.io/widget.js" data-key="' + p.key + '" async><\/script>\n<div id="impt-swarm"><\/div>';
+    document.getElementById('embed-snippet').textContent = snippet;
+
+    // Per-channel link copy
+    document.querySelectorAll('#channel-list a[data-link]').forEach(a => {
+      const path = a.dataset.link;
+      a.href = path + '?key=' + encodeURIComponent(p.key) + '&dest=Dublin';
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const url = location.origin + path + '?key=' + encodeURIComponent(p.key) + '&dest=Dublin';
+        navigator.clipboard?.writeText(url).then(() => {
+          const orig = a.textContent;
+          a.textContent = 'copied ✓';
+          setTimeout(() => a.textContent = orig, 1500);
+        });
+      });
+    });
+
+    // Bookings table
+    const wrap = document.getElementById('bk-wrap');
+    if (!bks.length) {
+      wrap.innerHTML = '<div class="empty">No bookings yet — drop your widget on a site or share a link in any channel. First booking arrives within ~24h on average.</div>';
+    } else {
+      const rows = bks.map(b => '<tr>' +
+        '<td data-l="Date">' + fmtDate(b.booked_at) + '</td>' +
+        '<td data-l="Booking">' + escHtml(b.booking_id || '') + '</td>' +
+        '<td data-l="Status"><span class="status ' + escHtml((b.status||'').toLowerCase()) + '">' + escHtml(b.status || 'pending') + '</span></td>' +
+        '<td data-l="Base" class="amt">' + (b.currency || '') + ' ' + ((b.base_value_cents||0)/100).toFixed(2) + '</td>' +
+        '<td data-l="You earn" class="amt"><strong>€' + fmtCents(b.accrual_eur_cents || 0) + '</strong></td>' +
+        '</tr>').join('');
+      wrap.innerHTML = '<table class="bk"><thead><tr><th>Date</th><th>Booking</th><th>Status</th><th style="text-align:right">Base</th><th style="text-align:right">You earn</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    }
+  }
+
+  function logout(){
+    localStorage.removeItem(KEY);
+    show('login');
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setErr('');
+    const token = document.getElementById('api-token').value.trim();
+    if (!token) return;
+    localStorage.setItem(KEY, token);
+    await loadDashboard(token);
+  });
+
+  document.getElementById('logout-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    logout();
+  });
+
+  document.getElementById('copy-embed').addEventListener('click', () => {
+    const text = document.getElementById('embed-snippet').textContent;
+    navigator.clipboard?.writeText(text).then(() => {
+      document.getElementById('copy-msg').textContent = 'Copied to clipboard.';
+      setTimeout(() => document.getElementById('copy-msg').textContent = '', 2000);
+    });
+  });
+
+  // Auto-load if we have a stored token
+  const stored = localStorage.getItem(KEY);
+  if (stored) {
+    loadDashboard(stored);
+  } else {
+    show('login');
+  }
+})();
+</script>
+</body>
+</html>
