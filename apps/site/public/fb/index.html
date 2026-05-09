@@ -9,14 +9,19 @@
   <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
   <p class="eyebrow">IMPT × Facebook</p>
   <h1>Book hotels from Facebook.</h1>
-  <p class="lede">Posted on a Page or shared in Messenger? Tap to find a hotel — €5 free + 5% Goodness back, 1 tonne CO₂ offset per booking.</p>
+  <p class="lede">Tap to chat with the IMPT page in Messenger. Send a city name, get a one-tap booking link back. €5 free + 5% Goodness back per booking + 1 tonne CO₂ offset (we pay).</p>
   <div class="row">
-    <a class="cta lime" href="#" id="book-now">Find a hotel →</a>
-    <a class="cta" href="/partners">Become a partner</a>
+    <a class="cta lime" id="open-msg" href="https://m.me/imptio" rel="noopener">Open in Messenger →</a>
+    <a class="cta" href="#" id="book-now">Book on the web instead</a>
   </div>
   <div class="box">
-    <h2>Status</h2>
-    <p style="color:var(--mute);font-size:14px">P2 — open Graph + click-to-Messenger handoff coming. URL + tracking work today.</p>
+    <h2>Try it</h2>
+    <ol style="color:var(--mute);font-size:14px;line-height:1.9;padding-left:20px">
+      <li>Tap <strong>Open in Messenger →</strong> above</li>
+      <li>Send a city name (e.g. "Dublin", "Paris", "Tokyo")</li>
+      <li>Page replies with a card — tap <em>Find hotels</em> → IMPT booking with city pre-filled</li>
+    </ol>
+    <p style="color:var(--mute);font-size:13px;margin-top:10px">Webhook ready at <code>swarm.impt.io/api/fb/webhook</code>. Page username + access token set in CF Pages env once Mike confirms the IMPT FB Page is wired to the Messenger Platform app.</p>
   </div>
   <footer>
     <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
