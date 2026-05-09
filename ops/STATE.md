@@ -3,7 +3,51 @@
 
 ---
 
-## 2026-05-09 (latest) — PR #3 opened: bots + big homepage refresh
+## 2026-05-09 (LIVE) — production deploy applied directly to mgmt-server
+
+### Discovery that flipped the architecture
+swarm.impt.io is **NOT** Cloudflare Pages. DNS resolves to `35.214.111.96` (this mgmt-server). nginx serves static + reverse-proxies `/api/widget/*` to a Python FastAPI on `localhost:2027` (`impt-swarm-widget.service`, systemd-managed).
+
+### What got deployed live (not just opened-as-PR)
+- **`apps/server/swarm_widget_api.py`** mirrors the live `/srv/swarm/impt-swarm-oss-2026-05-05/backend/swarm_widget_api.py` after I appended ~750 lines:
+  - `POST /api/widget/intent` — JSON intent + canonical deeplink + embed + qr URL (KV-equivalent in SQLite)
+  - `GET /api/widget/quote/{iid}` — intent lookup
+  - `GET /api/widget/hotels` — proxy `platform.impt.io/api/hotels` (no cache yet — Python edge cache TBD)
+  - `GET /api/widget/qr/{key}.png` + `.svg` — real QR generator (`segno`)
+  - `GET /api/email/sig/{key}` — paste-ready Outlook-safe signature snippet
+  - `GET /api/gpt/openapi.json` — Custom GPT Action manifest
+  - `POST /api/mcp/http` — Streamable HTTP MCP server with 4 tools (`impt_search_hotels`, `impt_create_intent`, `impt_get_quote`, `impt_get_deeplink`)
+  - `GET /api/mcp/info` — paste-ready Claude Desktop / Claude Code config
+  - `POST /api/tg/webhook` — Telegram bot (LIVE, secret-token verified, smart heuristic for non-city text)
+  - `GET+POST /api/whatsapp/webhook` — Meta Cloud API (waiting on tokens)
+  - `GET+POST /api/fb/webhook` — Meta Messenger Platform (waiting on tokens)
+  - SQLite tables added: `intents`, `bot_events`
+  - Idempotent `swarm-` prefix in `build_deeplink` so partner keys never double-prefix
+- **`ops/nginx-swarm.impt.io.conf`** mirrors the live nginx config (`/etc/nginx/sites-enabled/swarm.impt.io`) with my added location blocks for `/api/tg/webhook`, `/api/whatsapp/`, `/api/fb/`, `/api/(email|gpt|mcp)/`, `/api/widget/qr/.*\.(png|svg)$`
+- **`apps/site/public/widget/index.html`** mirrors the new live homepage at `swarm.impt.io/widget`
+- **`apps/site/public/mcp/index.html`** updated to show LIVE status and real install commands (HTTP transport)
+
+### Live state (verified by curl)
+- `https://swarm.impt.io/widget` 200 (22.6 KB cream-skin homepage)
+- `https://swarm.impt.io/{tg,wa,fb,ig,...,partners}` all 200
+- `t.me/Rambo_Marc2_bot` webhook = `https://swarm.impt.io/api/tg/webhook` (secret-token set, pending=0)
+- `POST /api/widget/intent` — issues `iid_*` + canonical deeplink with `utm_source=swarm-<key>` (idempotent prefix)
+- `POST /api/mcp/http` — JSON-RPC 2.0, returns 4 tools, executes `impt_get_deeplink` end-to-end
+- `GET /api/widget/qr/<key>.png` — real QR PNG (1.2 KB, ink/cream palette)
+- `GET /api/email/sig/<key>` — paste-ready HTML signature
+- `GET /api/gpt/openapi.json` — Custom GPT Action manifest
+- monitor.mjs cron `*/30 * * * *` running, all 40 probes green
+
+### Live test events Mike has already done
+The DB has 6+ real intents from chat_id `8103309746` (Mike) including "Rambo? 😂" (now correctly rejected by the heuristic) and "There are still a lot of bugs..." (also rejected).
+
+### Backup files (rollback safe)
+- `/etc/nginx/sites-enabled/swarm.impt.io.bak-pre-bots-20260509-103947`
+- `/srv/swarm/impt-swarm-oss-2026-05-05/demo/index.html.bak-pre-omnichannel`
+
+---
+
+## 2026-05-09 (earlier) — PR #3 opened: bots + big homepage refresh
 
 ### Phase
 P1 — Telegram + WhatsApp + Facebook webhooks; refreshed swarm.impt.io homepage.

@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08423a">
+  <title>IMPT Swarm — book hotels anywhere · 5% back · 1 t CO₂ per stay</title>
+  <meta name="description" content="The open-source omnichannel hotel-booking widget. One partner key works on web, Telegram, WhatsApp, Instagram, X, MCP, ChatGPT, watches, glasses, voice, plugins. 5% commission, 90-day cookie, MIT licensed.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23C8FF7E'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' fill='%2308423a'>i</text></svg>">
+  <meta property="og:title" content="IMPT Swarm — book hotels anywhere">
+  <meta property="og:description" content="One key. 36 channels. 5% to you. €5 + 5% Goodness back to your guest. 1 tonne CO₂ per booking.">
+  <meta property="og:image" content="/assets/social-preview.svg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root{--ink:#08423a;--cream:#FAF7F0;--lime:#C8FF7E;--mute:#3a6b62;--ink-soft:rgba(8,66,58,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font:16px/1.5 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+    a{color:var(--ink)}a:hover{text-decoration:underline}
+    code,pre{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+
+    /* Hero */
+    header.hero{position:relative;padding:64px 24px 96px;max-width:1080px;margin:0 auto}
+    .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--lime);border-radius:999px;font-weight:600;font-size:12px}
+    .badge.ink{background:var(--ink);color:var(--cream)}
+    .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ink)}
+    .badge.ink::before{background:var(--lime)}
+    h1.hero-title{font-family:"Fraunces",Georgia,serif;font-size:clamp(40px,7vw,84px);line-height:1.02;font-weight:600;letter-spacing:-.025em;margin-bottom:24px;max-width:18ch}
+    h1.hero-title em{font-style:italic;color:var(--mute);font-weight:400}
+    p.hero-lede{font-size:clamp(18px,2vw,22px);color:var(--mute);max-width:60ch;margin-bottom:36px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .cta{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:14px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
+    .cta:hover{transform:translateY(-1px);box-shadow:0 16px 36px -16px rgba(8,66,58,.4);text-decoration:none}
+    .cta.lime{background:var(--lime);color:var(--ink)}
+    .cta.ink{background:var(--ink);color:var(--cream)}
+    .cta.outline{border:1px solid var(--ink-soft);background:#fff;color:var(--ink)}
+
+    /* Stats strip */
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--ink-soft);border-top:1px solid var(--ink-soft);border-bottom:1px solid var(--ink-soft);margin-top:64px}
+    .stat{padding:24px;background:var(--cream);text-align:left}
+    .stat .n{font-family:"Fraunces",Georgia,serif;font-size:30px;font-weight:600;letter-spacing:-.02em}
+    .stat .l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-top:4px}
+
+    /* Section */
+    section{padding:80px 24px;max-width:1080px;margin:0 auto}
+    section h2{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,4vw,44px);line-height:1.1;font-weight:600;letter-spacing:-.02em;margin-bottom:24px;max-width:22ch}
+    section .sub{font-size:18px;color:var(--mute);max-width:60ch;margin-bottom:48px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+
+    /* Live demo embed */
+    .demo{background:#fff;border-radius:24px;padding:24px;border:1px solid var(--ink-soft);box-shadow:0 24px 64px -24px rgba(8,66,58,.18)}
+    .demo-snippet{margin-top:24px}
+    .demo-snippet pre{background:var(--ink);color:#cfe;padding:18px 22px;border-radius:14px;overflow-x:auto;font-size:13px;line-height:1.55}
+
+    /* Channel grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+    .tile{display:flex;flex-direction:column;gap:8px;padding:18px 16px;background:#fff;border:1px solid var(--ink-soft);border-radius:18px;text-decoration:none;color:var(--ink);transition:transform .15s ease, box-shadow .15s ease;position:relative}
+    .tile:hover{transform:translateY(-2px);box-shadow:0 16px 32px -16px rgba(8,66,58,.18);text-decoration:none}
+    .tile .ch{font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:600;letter-spacing:-.01em}
+    .tile .desc{font-size:13px;color:var(--mute)}
+    .tile .pill{position:absolute;top:14px;right:14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--cream);color:var(--mute)}
+    .tile .pill.live{background:var(--lime);color:var(--ink)}
+    .tile .pill.beta{background:var(--ink);color:var(--lime)}
+
+    /* Tier headings */
+    h3.tier{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;margin:36px 0 14px;letter-spacing:-.01em}
+    h3.tier:first-of-type{margin-top:0}
+
+    /* Comparison table */
+    table.compare{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden;border:1px solid var(--ink-soft)}
+    table.compare th,table.compare td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ink-soft);font-size:14px}
+    table.compare th{font-weight:600;background:var(--cream);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+    table.compare td:not(:first-child){text-align:center}
+    table.compare tr:last-child td{border-bottom:0}
+    table.compare .y{color:var(--ink);font-weight:600}
+    table.compare .y::before{content:"✓ "}
+    table.compare .n{color:var(--mute)}
+    table.compare .n::before{content:"– "}
+
+    /* How-it-works flow */
+    .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+    .step{padding:24px;background:#fff;border:1px solid var(--ink-soft);border-radius:18px;position:relative}
+    .step .num{font-family:"Fraunces",Georgia,serif;font-size:48px;font-weight:600;color:var(--lime);line-height:1;margin-bottom:12px;-webkit-text-stroke:1px var(--ink)}
+    .step h4{font-family:"Fraunces",Georgia,serif;font-size:18px;margin-bottom:8px}
+    .step p{font-size:14px;color:var(--mute);line-height:1.55}
+
+    /* Goodness */
+    .goodness{background:var(--ink);color:var(--cream);border-radius:24px;padding:48px}
+    .goodness .eyebrow{color:var(--lime)}
+    .goodness h2{color:var(--cream)}
+    .goodness .sub{color:rgba(250,247,240,.7)}
+    .goodness .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-top:36px}
+    .goodness .split .item{background:rgba(250,247,240,.06);border:1px solid rgba(200,255,126,.15);padding:20px;border-radius:14px}
+    .goodness .split .v{font-family:"Fraunces",Georgia,serif;font-size:30px;font-weight:600;color:var(--lime)}
+    .goodness .split .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,240,.6);margin-top:6px}
+    .goodness .split .b{font-size:14px;color:rgba(250,247,240,.85);margin-top:8px}
+
+    /* Partner sign-up */
+    .signup-card{background:#fff;border:1px solid var(--ink-soft);border-radius:18px;padding:32px}
+    .signup-card form{display:grid;gap:12px;margin-top:18px}
+    .signup-card input,.signup-card select{font:inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ink-soft);background:var(--cream);color:var(--ink);outline:0}
+    .signup-card input:focus,.signup-card select:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(8,66,58,.12)}
+    .signup-card button{font:inherit;font-weight:600;background:var(--lime);color:var(--ink);border:0;border-radius:12px;padding:14px 22px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+    .signup-card button:hover{transform:translateY(-1px);box-shadow:0 12px 28px -8px rgba(8,66,58,.35)}
+
+    /* Footer */
+    footer.site{padding:48px 24px;border-top:1px solid var(--ink-soft);max-width:1080px;margin:64px auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mute)}
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="badge-row">
+    <span class="badge">€5 free · 5% Goodness back · 1 t CO₂ per stay</span>
+    <span class="badge ink">36 channels live · MIT licensed</span>
+  </div>
+  <p class="eyebrow">IMPT Swarm — open-source booking</p>
+  <h1 class="hero-title">Book hotels anywhere your users <em>are</em>.</h1>
+  <p class="hero-lede">One open-source widget. One partner key. Thirty-six surfaces — web, Telegram, WhatsApp, Facebook, Instagram, X, MCP for Claude, Custom GPT, watches, glasses, voice, browser extensions, WordPress, Shopify, QR codes — all funnel to the same canonical booking page with full attribution and the same 5% to you on every confirmed stay.</p>
+  <div class="cta-row">
+    <a class="cta lime" href="#partners">Get a partner key →</a>
+    <a class="cta ink" href="#channels">See all 36 channels</a>
+    <a class="cta outline" href="https://github.com/hotelsrental-droid/swarmimptio">GitHub →</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n">36</div><div class="l">channels</div></div>
+    <div class="stat"><div class="n">5%</div><div class="l">commission</div></div>
+    <div class="stat"><div class="n">90 d</div><div class="l">cookie</div></div>
+    <div class="stat"><div class="n">8.7 KB</div><div class="l">gzipped</div></div>
+    <div class="stat"><div class="n">€0</div><div class="l">setup fee</div></div>
+    <div class="stat"><div class="n">60 s</div><div class="l">approval</div></div>
+  </div>
+</header>
+
+<!-- Live demo + embed snippet -->
+<section id="demo">
+  <p class="eyebrow">Live demo</p>
+  <h2>Drop one line. It works on your site today.</h2>
+  <p class="sub">The widget below is the same JS embed every partner uses. The form is real — pick a city and you'll land on <code>app.impt.io/find-hotel-input</code> with full UTM attribution.</p>
+
+  <div class="demo">
+    <script src="/widget.js" data-key="demo-home" data-dest="Dublin" data-title="Try it — pick a city"></script>
+    <div id="impt-swarm"></div>
+
+    <div class="demo-snippet">
+      <p class="eyebrow" style="margin-bottom:8px">Drop this on any site</p>
+      <pre>&lt;script src="https://swarm.impt.io/widget.js" data-key="YOUR_KEY" async&gt;&lt;/script&gt;
+&lt;div id="impt-swarm"&gt;&lt;/div&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- Channel grid -->
+<section id="channels">
+  <p class="eyebrow">36 channels — same key works everywhere</p>
+  <h2>Every surface your audience already uses.</h2>
+  <p class="sub">Each channel has its own URL on swarm.impt.io. Drop the link in your TG group, your IG bio, your email signature, your QR code, your WordPress plugin — all funnel to the same canonical booking page with the same partner attribution.</p>
+
+  <h3 class="tier">Web</h3>
+  <div class="grid">
+    <a class="tile" href="/widget"><span class="pill live">Live</span><span class="ch">/widget</span><span class="desc">JS embed for any site (this page)</span></a>
+  </div>
+
+  <h3 class="tier">Conversational chat</h3>
+  <div class="grid">
+    <a class="tile" href="/tg"><span class="pill beta">P1</span><span class="ch">/tg</span><span class="desc">Telegram bot — try it now</span></a>
+    <a class="tile" href="/wa"><span class="pill beta">P1</span><span class="ch">/wa</span><span class="desc">WhatsApp Cloud API</span></a>
+    <a class="tile" href="/fb"><span class="pill beta">P1</span><span class="ch">/fb</span><span class="desc">Facebook Messenger</span></a>
+    <a class="tile" href="/discord"><span class="pill">P3</span><span class="ch">/discord</span><span class="desc">Slash command bot</span></a>
+    <a class="tile" href="/slack"><span class="pill">P3</span><span class="ch">/slack</span><span class="desc">Workspace add-on</span></a>
+    <a class="tile" href="/imsg"><span class="pill">P3</span><span class="ch">/imsg</span><span class="desc">Apple Business Chat</span></a>
+  </div>
+
+  <h3 class="tier">Social posts</h3>
+  <div class="grid">
+    <a class="tile" href="/ig"><span class="pill">P2</span><span class="ch">/ig</span><span class="desc">Instagram link sticker</span></a>
+    <a class="tile" href="/tt"><span class="pill">P2</span><span class="ch">/tt</span><span class="desc">TikTok creator deeplink</span></a>
+    <a class="tile" href="/x"><span class="pill">P2</span><span class="ch">/x</span><span class="desc">Twitter Card + redirect</span></a>
+    <a class="tile" href="/li"><span class="pill">P2</span><span class="ch">/li</span><span class="desc">LinkedIn corporate</span></a>
+    <a class="tile" href="/yt"><span class="pill">P2</span><span class="ch">/yt</span><span class="desc">YouTube description</span></a>
+    <a class="tile" href="/pin"><span class="pill">P2</span><span class="ch">/pin</span><span class="desc">Pinterest Rich Pin</span></a>
+    <a class="tile" href="/reddit"><span class="pill">P2</span><span class="ch">/reddit</span><span class="desc">Subreddit-respecting deeplink</span></a>
+  </div>
+
+  <h3 class="tier">AI agents</h3>
+  <div class="grid">
+    <a class="tile" href="/mcp"><span class="pill">P1</span><span class="ch">/mcp</span><span class="desc">Claude MCP server</span></a>
+    <a class="tile" href="/gpt"><span class="pill">P1</span><span class="ch">/gpt</span><span class="desc">ChatGPT Custom GPT</span></a>
+    <a class="tile" href="/perplexity"><span class="pill">P4</span><span class="ch">/perplexity</span><span class="desc">Perplexity Pro action</span></a>
+  </div>
+
+  <h3 class="tier">Utilities + print</h3>
+  <div class="grid">
+    <a class="tile" href="/email"><span class="pill beta">P1</span><span class="ch">/email</span><span class="desc">Signature snippet generator</span></a>
+    <a class="tile" href="/qr"><span class="pill">P3</span><span class="ch">/qr</span><span class="desc">QR PNG/SVG generator</span></a>
+    <a class="tile" href="/sms"><span class="pill">P3</span><span class="ch">/sms</span><span class="desc">Short-link beacon</span></a>
+    <a class="tile" href="/nfc"><span class="pill">P3</span><span class="ch">/nfc</span><span class="desc">NFC URL helper</span></a>
+    <a class="tile" href="/wallet"><span class="pill">P3</span><span class="ch">/wallet</span><span class="desc">Apple/Google Wallet pass</span></a>
+  </div>
+
+  <h3 class="tier">Wearables · voice · cars · TV</h3>
+  <div class="grid">
+    <a class="tile" href="/watch"><span class="pill">P4</span><span class="ch">/watch</span><span class="desc">Apple Watch</span></a>
+    <a class="tile" href="/wear"><span class="pill">P4</span><span class="ch">/wear</span><span class="desc">Wear OS</span></a>
+    <a class="tile" href="/glasses"><span class="pill">P4</span><span class="ch">/glasses</span><span class="desc">Meta Ray-Ban</span></a>
+    <a class="tile" href="/vision"><span class="pill">P4</span><span class="ch">/vision</span><span class="desc">Apple Vision Pro</span></a>
+    <a class="tile" href="/voice/siri"><span class="pill">P4</span><span class="ch">/voice</span><span class="desc">Siri · Alexa · Google</span></a>
+    <a class="tile" href="/carplay"><span class="pill">P4</span><span class="ch">/carplay</span><span class="desc">CarPlay</span></a>
+    <a class="tile" href="/auto"><span class="pill">P4</span><span class="ch">/auto</span><span class="desc">Android Auto</span></a>
+    <a class="tile" href="/tv"><span class="pill">P4</span><span class="ch">/tv</span><span class="desc">Smart TV</span></a>
+  </div>
+
+  <h3 class="tier">Plugins</h3>
+  <div class="grid">
+    <a class="tile" href="/chrome"><span class="pill">P5</span><span class="ch">/chrome</span><span class="desc">Browser extension</span></a>
+    <a class="tile" href="/firefox"><span class="pill">P5</span><span class="ch">/firefox</span><span class="desc">Firefox add-on</span></a>
+    <a class="tile" href="/wp"><span class="pill">P5</span><span class="ch">/wp</span><span class="desc">WordPress plugin</span></a>
+    <a class="tile" href="/shopify"><span class="pill">P5</span><span class="ch">/shopify</span><span class="desc">Shopify app</span></a>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how">
+  <p class="eyebrow">How it works</p>
+  <h2>Same intent. Same redirect. Same revshare.</h2>
+  <p class="sub">Every adapter — bot, embed, QR, or AI agent — follows the exact same flow. One contract, one ledger, one canonical landing page.</p>
+
+  <div class="flow">
+    <div class="step"><div class="num">1</div><h4>Adapter fires</h4><p>User taps a TG button, scans a QR, or types in ChatGPT. The adapter creates an Intent (key + city + channel + iid).</p></div>
+    <div class="step"><div class="num">2</div><h4>We track</h4><p>Pixel beacon to <code>/api/widget/track</code> records the event. No PII — just key, channel, city, ref host, timestamp.</p></div>
+    <div class="step"><div class="num">3</div><h4>302 redirect</h4><p>User lands on <code>app.impt.io/find-hotel-input</code> with full UTMs and the iid. Same URL no matter which channel.</p></div>
+    <div class="step"><div class="num">4</div><h4>Revshare fires</h4><p>Stripe webhook matches metadata back to your iid. 5% lands in your ledger. Monthly payout via Wise / PayPal / Stripe / IMPT card / IMPT token.</p></div>
+  </div>
+</section>
+
+<!-- Goodness -->
+<section>
+  <div class="goodness">
+    <p class="eyebrow">The Goodness mechanic</p>
+    <h2>You earn 5%. Your guest earns more.</h2>
+    <p class="sub">Every booking your audience makes triggers a fixed cascade — paid by IMPT, never deducted from your commission.</p>
+    <div class="split">
+      <div class="item"><div class="v">5%</div><div class="k">Commission to you</div><div class="b">90-day attribution cookie. Monthly payout. €0 minimums.</div></div>
+      <div class="item"><div class="v">€5</div><div class="k">Free credit to your guest</div><div class="b">Applied at signup, reduces their first booking cost.</div></div>
+      <div class="item"><div class="v">3%</div><div class="k">To a cause they pick</div><div class="b">Trees for Life · ocean cleanup · whichever they choose.</div></div>
+      <div class="item"><div class="v">2%</div><div class="k">Next-stay credit</div><div class="b">Stacks toward their next IMPT booking.</div></div>
+      <div class="item"><div class="v">1 t</div><div class="k">CO₂ offset</div><div class="b">One tonne of carbon offset per booking — paid by IMPT.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison -->
+<section>
+  <p class="eyebrow">vs the closed black-boxes</p>
+  <h2>Higher commission · longer cookie · open-source.</h2>
+  <table class="compare">
+    <thead><tr><th></th><th>IMPT Swarm</th><th>Booking.com</th><th>Expedia</th></tr></thead>
+    <tbody>
+      <tr><td>Commission</td><td class="y">5%</td><td>4%</td><td>4%</td></tr>
+      <tr><td>Cookie window</td><td class="y">90 days</td><td>30 days</td><td>7 days</td></tr>
+      <tr><td>Open-source (MIT)</td><td class="y">Yes</td><td class="n">No</td><td class="n">No</td></tr>
+      <tr><td>Carbon offset / booking</td><td class="y">1 tonne</td><td class="n">No</td><td class="n">No</td></tr>
+      <tr><td>Loyalty back to guest</td><td class="y">5% Goodness</td><td class="n">No</td><td class="n">No</td></tr>
+      <tr><td>Setup time</td><td class="y">60 sec</td><td>Days</td><td>Days</td></tr>
+      <tr><td>Approval</td><td class="y">Automated</td><td class="n">Manual</td><td class="n">Manual</td></tr>
+      <tr><td>Channels supported</td><td class="y">36 (and counting)</td><td>1 (web)</td><td>1 (web)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Partner sign-up -->
+<section id="partners">
+  <p class="eyebrow">Become a partner</p>
+  <h2>60-second setup. €0 minimums.</h2>
+  <p class="sub">Tell us where to pay you and we'll issue a partner key. Drop it on a site, in a TG channel, in a QR code — same key works everywhere.</p>
+
+  <div class="signup-card">
+    <form id="signup">
+      <input name="email" type="email" placeholder="you@yoursite.com" required>
+      <input name="brand" type="text" placeholder="Site or brand name" required>
+      <select name="payout" required>
+        <option value="">Payout method…</option>
+        <option value="wise">Wise</option>
+        <option value="paypal">PayPal</option>
+        <option value="stripe">Stripe</option>
+        <option value="impt-card">IMPT debit card</option>
+        <option value="impt-token">IMPT token</option>
+      </select>
+      <button type="submit">Get my partner key →</button>
+    </form>
+    <p id="signup-msg" style="margin-top:14px;font-size:13px;color:var(--mute)"></p>
+  </div>
+</section>
+
+<footer class="site">
+  <span>MIT licensed · Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+  <span><a href="https://github.com/hotelsrental-droid/swarmimptio">GitHub</a> · <a href="/openapi.json">API</a> · <a href="/.well-known/agent.json">agent.json</a> · <a href="/partners">Partner sign-up</a></span>
+</footer>
+
+<script>
+  document.getElementById('signup').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target);
+    var msg = document.getElementById('signup-msg');
+    msg.textContent = 'Submitting…';
+    try {
+      var r = await fetch('/api/partners/signup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.fromEntries(fd)) });
+      var data = await r.json();
+      if ((r.ok || r.status === 201) && data.key) {
+        msg.innerHTML = 'Done — your key is <code style="background:var(--cream);padding:2px 6px;border-radius:4px">' + data.key + '</code>. Saved to your inbox.';
+      } else if (data.error === 'not_implemented') {
+        msg.textContent = 'Sign-up live after Mike connects CF Pages — for now email partners@impt.io and we\'ll onboard you by hand within 24h.';
+      } else {
+        msg.textContent = data.error || 'Sign-up not yet live — email partners@impt.io.';
+      }
+    } catch (err) {
+      msg.textContent = 'Sign-up endpoint not yet live — email partners@impt.io.';
+    }
+  });
+</script>
+</body>
+</html>
