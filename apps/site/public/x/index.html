@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book green hotels — €5 free + 5% back · IMPT</title>
+<meta name="description" content="One booking. €5 credit. 5% Goodness back. 1 tonne CO₂ offset.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@imptio">
+<meta name="twitter:title" content="Book green hotels — €5 free + 5% back">
+<meta name="twitter:description" content="Tap to find a stay. We offset a tonne of carbon per booking.">
+<meta name="twitter:image" content="https://swarm.impt.io/assets/social-preview.svg">
+<meta property="og:title" content="Book green hotels — €5 free + 5% back">
+<meta property="og:description" content="Tap to find a stay. We offset a tonne of carbon per booking.">
+<meta property="og:image" content="https://swarm.impt.io/assets/social-preview.svg">
+<meta property="og:url" content="https://swarm.impt.io/x">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="x">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × X</p>
+  <h1>Tap. Book. Plant a tree.</h1>
+  <p class="lede">You tapped an IMPT card on X. We'll send you to find a hotel — €5 free for you + 5% back per booking + 1 tonne CO₂ offset (we pay).</p>
+  <div class="row"><a class="cta lime" href="#" id="book-now">Find a hotel →</a></div>
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+  setTimeout(function () { location.replace(SwarmChannel.bookNowUrl()); }, 800);
+</script>
+</body></html>

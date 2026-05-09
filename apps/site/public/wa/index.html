@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT on WhatsApp — book hotels in chat</title>
+<meta name="description" content="Message the IMPT WhatsApp Business number. Search, quote, reserve in WhatsApp. €5 free + 5% Goodness back.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="wa">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × WhatsApp</p>
+  <h1>Book hotels in WhatsApp.</h1>
+  <p class="lede">Tap to message IMPT on WhatsApp. Type a city, the bot replies with prices, you tap a button to reserve. Same Goodness mechanic — €5 free for you, 5% back (3% cause / 2% next-stay).</p>
+
+  <div class="row">
+    <a class="cta lime" id="open-wa" href="#" rel="noopener">Open in WhatsApp →</a>
+    <a class="cta" href="#" id="book-now">Book on the web instead</a>
+  </div>
+
+  <div class="box">
+    <h2>For partners</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:14px">Share this link anywhere — every booking from your audience earns 5%.</p>
+    <pre id="partner-link">https://swarm.impt.io/wa?key=YOUR_KEY&amp;dest=Dublin</pre>
+    <p style="margin-top:10px;font-size:13px"><a href="/partners">Get a partner key →</a></p>
+  </div>
+
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P1 — Meta Business verification + Cloud API number provisioning in progress. Until then this page deeplinks to a templated <code>wa.me</code> click-to-chat. The bot replies + Flows form land on launch.</p>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  // wa.me click-to-chat: pre-filled message includes destination.
+  var num = '353000000000'; // P1 — replace with provisioned WA Business number
+  var msg = 'Book ' + (SwarmChannel.dest || 'a hotel') + ' via IMPT (key: ' + SwarmChannel.key + ')';
+  document.getElementById('open-wa').href = 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg);
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+  var pl = document.getElementById('partner-link');
+  if (SwarmChannel.key && SwarmChannel.key !== 'swarm-public') {
+    pl.textContent = 'https://swarm.impt.io/wa?key=' + SwarmChannel.key + (SwarmChannel.dest ? '&dest=' + SwarmChannel.dest : '&dest=Dublin');
+  }
+</script>
+</body></html>

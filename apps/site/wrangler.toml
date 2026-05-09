@@ -1,0 +1,22 @@
+# Cloudflare Pages config for swarm.impt.io
+#
+# Deploy via: wrangler pages deploy public --project-name=swarm-impt --branch=main
+# Or wire CF Pages "Connect to Git" UI to this repo + branch=main; build command = `npm run site:build`; output = `apps/site/public`.
+#
+# Env (set in CF Pages dashboard, NOT committed):
+#   STRIPE_SECRET_KEY      — for /api/widget/{reserve,pay,webhook} (Stripe Checkout sessions)
+#   MONGO_URI              — IMPT cluster, collection `widget_intents`
+#   IMPT_API_BASE          — internal proxy for /api/widget/hotels (defaults to https://app.impt.io/api)
+#   TG_BOT_TOKEN           — Telegram bot token (P1)
+#   WA_PHONE_NUMBER_ID     — WhatsApp Cloud API (P1)
+#   WA_TOKEN               — WhatsApp Cloud API (P1)
+#   ALERT_WEBHOOK          — uptime + conversion alerts → mike@ relay
+
+name = "swarm-impt"
+compatibility_date = "2026-05-09"
+pages_build_output_dir = "public"
+
+[vars]
+SCHEMA_VERSION = "1"
+PUBLIC_HOST = "swarm.impt.io"
+REDIRECT_BASE = "https://app.impt.io/find-hotel-input"

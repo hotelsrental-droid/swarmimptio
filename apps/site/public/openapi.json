@@ -1,0 +1,118 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IMPT Swarm Widget API",
+    "description": "Channel-agnostic booking primitive for IMPT. Used by every adapter (TG/WA/IG/MCP/GPT/...) plus the original web embed. Canonical destination is https://app.impt.io/find-hotel-input — every deeplink lands there.",
+    "version": "0.1.0",
+    "license": { "name": "MIT", "url": "https://github.com/hotelsrental-droid/swarmimptio/blob/main/LICENSE" },
+    "contact": { "name": "IMPT", "email": "swarm-widget@impt.io", "url": "https://impt.io" }
+  },
+  "servers": [
+    { "url": "https://swarm.impt.io", "description": "Production" }
+  ],
+  "paths": {
+    "/api/widget/track": {
+      "get": {
+        "summary": "Pixel beacon for entry/click/convert events",
+        "parameters": [
+          { "name": "key", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "evt", "in": "query", "required": true, "schema": { "type": "string", "enum": ["view", "click", "enter", "convert", "reserve", "pay"] } },
+          { "name": "channel", "in": "query", "schema": { "type": "string" } },
+          { "name": "dest", "in": "query", "schema": { "type": "string" } },
+          { "name": "iid", "in": "query", "schema": { "type": "string" } },
+          { "name": "ref", "in": "query", "schema": { "type": "string" } },
+          { "name": "ts", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "1×1 transparent GIF", "content": { "image/gif": {} } } }
+      }
+    },
+    "/api/widget/intent": {
+      "post": {
+        "summary": "Create an Intent and return a canonical deeplink",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IntentInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Intent created", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IntentResponse" } } } },
+          "400": { "description": "Bad request" }
+        }
+      }
+    },
+    "/api/widget/hotels": {
+      "get": {
+        "summary": "JSON hotel search (P0.5 — wired to IMPT internal API)",
+        "parameters": [
+          { "name": "city", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": { "501": { "description": "Not implemented in P0" } }
+      }
+    },
+    "/api/widget/quote/{iid}": {
+      "get": {
+        "summary": "Live quote for an intent (P0.5)",
+        "parameters": [{ "name": "iid", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "501": { "description": "Not implemented in P0" } }
+      }
+    },
+    "/api/widget/reserve": {
+      "post": { "summary": "Hold a room (P0.5 — Stripe-ready payload)", "responses": { "501": { "description": "Not implemented in P0" } } }
+    },
+    "/api/widget/pay": {
+      "post": { "summary": "Stripe Checkout / Apple Pay / Google Pay session (P0.5)", "responses": { "501": { "description": "Not implemented in P0" } } }
+    },
+    "/api/widget/webhook/{key}": {
+      "post": {
+        "summary": "Conversion + revshare callback per partner key (P0.5)",
+        "parameters": [{ "name": "key", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "501": { "description": "Not implemented in P0" } }
+      }
+    },
+    "/api/partners/signup": {
+      "post": { "summary": "Self-serve partner sign-up — issue a partner key (P0.5)", "responses": { "501": { "description": "Not implemented in P0" } } }
+    }
+  },
+  "components": {
+    "schemas": {
+      "IntentInput": {
+        "type": "object",
+        "required": ["destination", "partner"],
+        "properties": {
+          "destination": { "type": "string", "description": "CITY name (never country)." },
+          "partner": {
+            "type": "object",
+            "required": ["key", "channel"],
+            "properties": {
+              "key": { "type": "string" },
+              "channel": { "type": "string", "enum": ["web", "tg", "wa", "fb", "ig", "tt", "x", "li", "yt", "pin", "reddit", "discord", "slack", "imsg", "email", "sms", "qr", "nfc", "wallet", "watch", "wear", "glasses", "vision", "voice", "carplay", "auto", "tv", "chrome", "firefox", "wp", "shopify", "mcp", "gpt", "perplexity"] },
+              "campaign": { "type": "string" },
+              "creator": { "type": "string" },
+              "click_id": { "type": "string" }
+            }
+          },
+          "guests": {
+            "type": "object",
+            "properties": {
+              "adults": { "type": "integer", "default": 2 },
+              "children": { "type": "integer", "default": 0 },
+              "rooms": { "type": "integer", "default": 1 }
+            }
+          },
+          "intent": { "type": "string", "enum": ["search_hotel", "get_quote", "reserve", "pay", "cancel"], "default": "search_hotel" },
+          "user_locale": { "type": "string" }
+        }
+      },
+      "IntentResponse": {
+        "type": "object",
+        "properties": {
+          "intent_id": { "type": "string" },
+          "deeplink": { "type": "string", "format": "uri" },
+          "track": { "type": "string", "format": "uri" },
+          "embed": { "type": "string" },
+          "qr": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

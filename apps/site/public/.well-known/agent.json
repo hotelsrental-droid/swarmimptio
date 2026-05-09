@@ -1,0 +1,12 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "IMPT Swarm",
+  "name_for_model": "impt_swarm",
+  "description_for_human": "Book hotels through IMPT — €5 free for guests, 5% Goodness back, 1 tonne CO₂ offset per booking.",
+  "description_for_model": "Use IMPT Swarm to search hotels, request quotes, and produce canonical booking deeplinks. Every deeplink lands on app.impt.io/find-hotel-input with full UTM attribution. Pass a destination CITY (never country). Final currency is destination-driven, not user-locale. Partner key is required for revshare attribution; default to 'swarm-public' if none.",
+  "auth": { "type": "none" },
+  "api": { "type": "openapi", "url": "https://swarm.impt.io/openapi.json" },
+  "logo_url": "https://swarm.impt.io/assets/hero.svg",
+  "contact_email": "swarm-widget@impt.io",
+  "legal_info_url": "https://swarm.impt.io/TERMS.md"
+}

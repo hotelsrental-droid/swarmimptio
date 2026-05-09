@@ -1,0 +1,20 @@
+{
+  "name": "@impt/swarm-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "swarm.impt.io — Cloudflare Pages site serving every per-channel landing + Pages Functions for the widget API.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler pages dev public --compatibility-date=2026-05-09",
+    "build": "node ./scripts/build.mjs",
+    "deploy": "wrangler pages deploy public --project-name=swarm-impt --branch=main",
+    "deploy:preview": "wrangler pages deploy public --project-name=swarm-impt"
+  },
+  "dependencies": {
+    "@impt/swarm-shared": "*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260501.0",
+    "wrangler": "^3.80.0"
+  }
+}

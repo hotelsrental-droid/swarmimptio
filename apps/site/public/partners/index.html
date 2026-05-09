@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Become an IMPT partner — earn 5% on every booking</title>
+<meta name="description" content="60-second sign-up. Get a partner key, drop the snippet, earn 5% on every confirmed hotel booking. 90-day attribution. MIT licensed.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="web">
+<div class="wrap">
+  <span class="badge">5% commission · 90-day cookie · 60-sec setup</span>
+  <p class="eyebrow">IMPT Swarm — partners</p>
+  <h1>Earn 5% on every hotel booking.</h1>
+  <p class="lede">Sign up in 60 seconds, get a partner key, drop the widget on your site or share a per-channel link. We pay 5% on every confirmed booking — your guests get €5 free + 5% Goodness back.</p>
+
+  <div class="box">
+    <h2>Sign up</h2>
+    <form id="signup" style="display:grid;gap:10px">
+      <input name="email" type="email" placeholder="you@yoursite.com" required style="font:inherit;padding:12px 14px;border-radius:12px;border:1px solid rgba(8,66,58,.18);background:#fff;color:var(--ink);outline:0">
+      <input name="brand" type="text" placeholder="Site or brand name" required style="font:inherit;padding:12px 14px;border-radius:12px;border:1px solid rgba(8,66,58,.18);background:#fff;color:var(--ink);outline:0">
+      <select name="payout" required style="font:inherit;padding:12px 14px;border-radius:12px;border:1px solid rgba(8,66,58,.18);background:#fff;color:var(--ink);outline:0">
+        <option value="">Payout method…</option>
+        <option value="wise">Wise</option>
+        <option value="paypal">PayPal</option>
+        <option value="stripe">Stripe</option>
+        <option value="impt-card">IMPT debit card</option>
+        <option value="impt-token">IMPT token</option>
+      </select>
+      <button type="submit" class="cta lime" style="border:0;justify-content:center">Get my partner key →</button>
+    </form>
+    <p id="signup-msg" style="margin-top:14px;font-size:13px;color:var(--mute)"></p>
+  </div>
+
+  <div class="box">
+    <h2>What you get</h2>
+    <ul style="color:var(--mute);font-size:14px;line-height:1.9;padding-left:20px">
+      <li>Partner key — drop into widget, bots, social, QR, anywhere</li>
+      <li>Live dashboard — clicks · bookings · earned</li>
+      <li>5% commission · 90-day cookie · monthly payout</li>
+      <li>30+ channels — TG, WA, IG, X, MCP, ChatGPT, email, QR — same key works everywhere</li>
+      <li>"Powered by IMPT.io" badge in your widget (mandatory for revshare)</li>
+    </ul>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/openapi.json">API</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('signup').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    SwarmChannel.track('signup_attempt');
+    var fd = new FormData(e.target);
+    var msg = document.getElementById('signup-msg');
+    msg.textContent = 'Submitting…';
+    try {
+      var r = await fetch('/api/partners/signup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.fromEntries(fd)) });
+      var data = await r.json();
+      if (r.ok && data.key) {
+        msg.innerHTML = 'Done — your key is <code>' + data.key + '</code>. Saved to your inbox at ' + fd.get('email') + '.';
+        SwarmChannel.track('signup_success');
+      } else {
+        msg.textContent = data.error || 'Sign-up not yet live — P0 spine still wiring. Email partners@impt.io to be onboarded by hand.';
+      }
+    } catch (err) {
+      msg.textContent = 'Sign-up not yet live — P0 spine still wiring. Email partners@impt.io to be onboarded by hand.';
+    }
+  });
+</script>
+</body></html>

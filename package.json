@@ -14,10 +14,10 @@
   "homepage": "https://swarm.impt.io",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/impt/swarm-widget.git"
+    "url": "git+https://github.com/hotelsrental-droid/swarmimptio.git"
   },
   "bugs": {
-    "url": "https://github.com/impt/swarm-widget/issues"
+    "url": "https://github.com/hotelsrental-droid/swarmimptio/issues"
   },
   "license": "MIT",
   "author": "IMPT Systems Limited <swarm-widget@impt.io>",
@@ -31,12 +31,19 @@
     "README.md",
     "LICENSE"
   ],
+  "workspaces": [
+    "adapters/*",
+    "apps/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly",
     "size": "size-limit",
     "lint": "eslint src",
-    "test": "vitest run"
+    "test": "vitest run",
+    "site:dev": "npm --workspace apps/site run dev",
+    "site:build": "npm --workspace apps/site run build",
+    "monitor": "node ops/monitor.mjs"
   },
   "size-limit": [
     {

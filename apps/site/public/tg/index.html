@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMPT on Telegram — book hotels in chat</title>
+<meta name="description" content="Open the IMPT bot in Telegram. Search hotels, get a quote, reserve — all in chat. €5 free + 5% Goodness back.">
+<link rel="stylesheet" href="/_channel.css">
+</head><body data-channel="tg">
+<div class="wrap">
+  <span class="badge">€5 free · 5% back · 1 t CO₂ per stay</span>
+  <p class="eyebrow">IMPT × Telegram</p>
+  <h1>Book hotels in Telegram.</h1>
+  <p class="lede">Tap below to open <code>@imptbookingbot</code>. Type a city, get a price, reserve in-chat. Same Goodness mechanic as the web — €5 free for you, 5% back per booking (3% to your cause + 2% next-stay credit).</p>
+
+  <div class="row">
+    <a class="cta lime" href="https://t.me/imptbookingbot" id="open-bot" rel="noopener">Open in Telegram →</a>
+    <a class="cta" href="#" id="book-now">Book on the web instead</a>
+  </div>
+
+  <div class="box">
+    <h2>For partners</h2>
+    <p style="color:var(--mute);font-size:14px;margin-bottom:14px">Drop this link in your TG channel — every booking from your audience earns 5%.</p>
+    <pre id="partner-link">https://swarm.impt.io/tg?key=YOUR_KEY&amp;dest=Dublin</pre>
+    <p style="margin-top:10px;font-size:13px"><a href="/partners">Get a partner key →</a></p>
+  </div>
+
+  <div class="box">
+    <h2>Status</h2>
+    <p style="color:var(--mute);font-size:14px">P1 — bot + Mini App rolling out. Today this page deeplinks to the bot username; tomorrow it wakes the Mini App inside Telegram with the key + city pre-filled.</p>
+  </div>
+
+  <footer>
+    <span>Made in Ireland · <a href="https://impt.io">Powered by IMPT.io</a></span>
+    <span><a href="/">All channels</a> · <a href="/partners">Sign up</a></span>
+  </footer>
+</div>
+<script src="/_channel.js"></script>
+<script>
+  document.getElementById('book-now').addEventListener('click', function (e) { e.preventDefault(); SwarmChannel.bookNow(); });
+  // Pre-fill partner-link example with the key from the URL if present.
+  var pl = document.getElementById('partner-link');
+  if (SwarmChannel.key && SwarmChannel.key !== 'swarm-public') {
+    pl.textContent = 'https://swarm.impt.io/tg?key=' + SwarmChannel.key + (SwarmChannel.dest ? '&dest=' + SwarmChannel.dest : '&dest=Dublin');
+  }
+</script>
+</body></html>

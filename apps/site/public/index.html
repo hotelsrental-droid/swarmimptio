@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IMPT Swarm — book hotels anywhere · 5% back · 1 tonne CO₂ per stay</title>
+  <meta name="description" content="The open-source hotel-search widget that pays you 5%. €5 free for guests. 1 tonne carbon offset per booking. Drop on any site, post in any chat, embed in any AI agent.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23C8FF7E'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' fill='%2308423a'>i</text></svg>">
+  <meta property="og:title" content="IMPT Swarm — book hotels anywhere">
+  <meta property="og:description" content="5% to you. €5 + 5% Goodness back to your guest. 1 tonne CO₂ per booking.">
+  <meta property="og:image" content="/assets/social-preview.svg">
+  <style>
+    :root{--ink:#08423a;--cream:#FAF7F0;--lime:#C8FF7E;--mute:#3a6b62}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font:16px/1.5 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--ink)}
+    .wrap{max-width:980px;margin:0 auto;padding:48px 24px 96px}
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+    h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(36px,6vw,64px);line-height:1.04;font-weight:600;margin-bottom:18px;letter-spacing:-.02em}
+    .lede{font-size:20px;color:var(--mute);max-width:64ch;margin-bottom:32px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:48px}
+    .tile{display:flex;flex-direction:column;gap:6px;padding:18px 16px;background:#fff;border:1px solid rgba(8,66,58,.08);border-radius:18px;text-decoration:none;color:var(--ink);transition:transform .15s ease, box-shadow .15s ease}
+    .tile:hover{transform:translateY(-2px);box-shadow:0 12px 32px -12px rgba(8,66,58,.18)}
+    .tile .ch{font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:600}
+    .tile .desc{font-size:13px;color:var(--mute)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--lime);border-radius:999px;font-weight:600;font-size:13px;margin-bottom:24px}
+    .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
+    .embed{margin-top:48px;padding:24px;background:#fff;border-radius:18px;border:1px solid rgba(8,66,58,.08)}
+    .embed h2{font-family:"Fraunces",Georgia,serif;font-size:24px;margin-bottom:14px}
+    code{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--cream);padding:2px 6px;border-radius:6px}
+    pre{background:var(--ink);color:#cfe;padding:16px 20px;border-radius:14px;overflow-x:auto;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.6}
+    footer{margin-top:64px;padding-top:24px;border-top:1px solid rgba(8,66,58,.12);font-size:13px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    a{color:var(--ink)}a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="badge">€5 free · 5% Goodness back · 1 tonne CO₂ per stay</p>
+    <p class="eyebrow">IMPT Swarm</p>
+    <h1>Book hotels<br>anywhere your users are.</h1>
+    <p class="lede">One open-source widget. Thirty-plus surfaces. Same tracking, same canonical landing, same 5% to you on every booking. Drop on a site, post in a chat, embed in an AI agent — all roads lead to <a href="https://app.impt.io/find-hotel-input">app.impt.io/find-hotel-input</a>.</p>
+
+    <div class="embed">
+      <h2>Drop it on any site</h2>
+      <pre>&lt;script src="https://swarm.impt.io/widget.js" data-key="YOUR_KEY" async&gt;&lt;/script&gt;
+&lt;div id="impt-swarm"&gt;&lt;/div&gt;</pre>
+      <p style="margin-top:14px;color:var(--mute);font-size:14px">Don't have a key? <a href="/partners">Get one in 60 seconds →</a></p>
+    </div>
+
+    <h2 style="margin-top:64px;font-family:'Fraunces',Georgia,serif;font-size:28px">…or post it in any channel</h2>
+    <p class="lede" style="margin-top:8px">Each per-channel surface has its own URL on swarm.impt.io. Same partner key, same redirect.</p>
+
+    <div class="grid">
+      <a class="tile" href="/tg"><span class="ch">/tg</span><span class="desc">Telegram bot + Mini App</span></a>
+      <a class="tile" href="/wa"><span class="ch">/wa</span><span class="desc">WhatsApp click-to-chat</span></a>
+      <a class="tile" href="/fb"><span class="ch">/fb</span><span class="desc">Facebook Messenger</span></a>
+      <a class="tile" href="/ig"><span class="ch">/ig</span><span class="desc">Instagram link sticker</span></a>
+      <a class="tile" href="/tt"><span class="ch">/tt</span><span class="desc">TikTok creator deeplink</span></a>
+      <a class="tile" href="/x"><span class="ch">/x</span><span class="desc">Twitter Card + redirect</span></a>
+      <a class="tile" href="/li"><span class="ch">/li</span><span class="desc">LinkedIn corporate</span></a>
+      <a class="tile" href="/yt"><span class="ch">/yt</span><span class="desc">YouTube description deeplink</span></a>
+      <a class="tile" href="/pin"><span class="ch">/pin</span><span class="desc">Pinterest Rich Pin</span></a>
+      <a class="tile" href="/discord"><span class="ch">/discord</span><span class="desc">Slash-command bot</span></a>
+      <a class="tile" href="/slack"><span class="ch">/slack</span><span class="desc">Add to workspace</span></a>
+      <a class="tile" href="/imsg"><span class="ch">/imsg</span><span class="desc">Apple Business Chat</span></a>
+      <a class="tile" href="/email"><span class="ch">/email</span><span class="desc">Signature snippet</span></a>
+      <a class="tile" href="/qr"><span class="ch">/qr</span><span class="desc">QR generator</span></a>
+      <a class="tile" href="/wallet"><span class="ch">/wallet</span><span class="desc">Apple/Google Wallet pass</span></a>
+      <a class="tile" href="/watch"><span class="ch">/watch</span><span class="desc">Apple Watch / Wear OS</span></a>
+      <a class="tile" href="/voice/siri"><span class="ch">/voice</span><span class="desc">Siri · Alexa · Google</span></a>
+      <a class="tile" href="/carplay"><span class="ch">/carplay</span><span class="desc">CarPlay + Android Auto</span></a>
+      <a class="tile" href="/tv"><span class="ch">/tv</span><span class="desc">Smart TV apps</span></a>
+      <a class="tile" href="/chrome"><span class="ch">/chrome</span><span class="desc">Browser extension</span></a>
+      <a class="tile" href="/wp"><span class="ch">/wp</span><span class="desc">WordPress plugin</span></a>
+      <a class="tile" href="/shopify"><span class="ch">/shopify</span><span class="desc">Shopify app</span></a>
+      <a class="tile" href="/mcp"><span class="ch">/mcp</span><span class="desc">Claude MCP server</span></a>
+      <a class="tile" href="/gpt"><span class="ch">/gpt</span><span class="desc">ChatGPT Custom GPT</span></a>
+    </div>
+
+    <footer>
+      <span>MIT licensed · Made in Ireland · <a href="https://impt.io">Powered by IMPT</a></span>
+      <span><a href="/partners">Partner sign-up</a> · <a href="https://github.com/hotelsrental-droid/swarmimptio">GitHub</a> · <a href="/openapi.json">API</a></span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "outDir": "dist",
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["src/**/*", "adapters/_shared/src/**/*", "apps/site/functions/**/*"]
+}

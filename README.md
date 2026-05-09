@@ -30,6 +30,42 @@ That's it. Renders a cream-skin search box. Your visitors find hotels. You earn 
 
 ---
 
+## Omnichannel — the same key, every surface
+
+The widget on a website is just one channel. Every other surface lives at its own URL on `swarm.impt.io`:
+
+| Channel | URL |
+|---|---|
+| Web embed | `swarm.impt.io/widget.js` |
+| Telegram | [`/tg`](https://swarm.impt.io/tg) |
+| WhatsApp | [`/wa`](https://swarm.impt.io/wa) |
+| Facebook | [`/fb`](https://swarm.impt.io/fb) |
+| Instagram | [`/ig`](https://swarm.impt.io/ig) |
+| TikTok | [`/tt`](https://swarm.impt.io/tt) |
+| X / Twitter | [`/x`](https://swarm.impt.io/x) |
+| LinkedIn | [`/li`](https://swarm.impt.io/li) |
+| YouTube | [`/yt`](https://swarm.impt.io/yt) |
+| Pinterest | [`/pin`](https://swarm.impt.io/pin) |
+| Discord | [`/discord`](https://swarm.impt.io/discord) |
+| Slack | [`/slack`](https://swarm.impt.io/slack) |
+| iMessage | [`/imsg`](https://swarm.impt.io/imsg) |
+| Email signature | [`/email`](https://swarm.impt.io/email) |
+| QR code | [`/qr`](https://swarm.impt.io/qr) |
+| Apple/Google Wallet | [`/wallet`](https://swarm.impt.io/wallet) |
+| Apple Watch · Wear OS | [`/watch`](https://swarm.impt.io/watch) · [`/wear`](https://swarm.impt.io/wear) |
+| Voice (Siri / Alexa / Google) | [`/voice/siri`](https://swarm.impt.io/voice/siri) |
+| CarPlay · Android Auto · TV | [`/carplay`](https://swarm.impt.io/carplay) · [`/auto`](https://swarm.impt.io/auto) · [`/tv`](https://swarm.impt.io/tv) |
+| Browser extension | [`/chrome`](https://swarm.impt.io/chrome) · [`/firefox`](https://swarm.impt.io/firefox) |
+| WordPress · Shopify | [`/wp`](https://swarm.impt.io/wp) · [`/shopify`](https://swarm.impt.io/shopify) |
+| Claude MCP | [`/mcp`](https://swarm.impt.io/mcp) |
+| ChatGPT GPT | [`/gpt`](https://swarm.impt.io/gpt) |
+
+Same partner key works everywhere. Every entry point pixels `/api/widget/track` and 302s to `app.impt.io/find-hotel-input` with `utm_source=swarm-<KEY>&utm_medium=<channel>` — single attribution funnel.
+
+See **[ops/STATE.md](./ops/STATE.md)** for current build status and **[docs/](./docs/)** for the contract.
+
+---
+
 ## How we compare
 
 | | **IMPT Swarm** | Booking.com | Expedia |
